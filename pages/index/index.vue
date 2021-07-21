@@ -30,10 +30,17 @@
 						<uni-search-bar :placeholder="placheholder" @focus="showHistory" @blur="closeHistory" :radius="5" @confirm="search" :cancelButton="none"
 							class="square_radius" v-model="search_content">
 							</uni-search-bar>
-							<view v-show="show" class="search-history">搜索历史</view>
-					</view>
-					
-					<view class="search-history-div">
+							<view v-show="show" class="search-history">
+								<view class="history-tab-div">
+									<ul>
+										<li v-for="(item,index) in search_history" :key='index' style="display: inline; margin-left: 10rpx;">
+											<van-tag closeable size="large" type='primary' @close.stop='del(item.name)'>
+											<a @click.stop='chooseHistory(item.name)'> {{item.name}}</a>
+											</van-tag>
+										</li>
+									</ul>
+								</view>
+							</view>
 					</view>
 				</view>
 				<view class="triangle">
@@ -140,7 +147,13 @@
 							})
 							return false;
 						}
-						this.search_history.unshift(temp.data[0].platformUserHandle);
+						this.search_history.push({'name':temp.data[0].platformUserHandle});
+						let data =  this.search_history;
+						console.log(data);
+						uni.setStorage({
+							key:"search_history",
+							data:data
+						})
 						uni.navigateTo({
 							url:'outcome?username='+temp.data[0].platformUserHandle+'&avatarUrl='+temp.data[0].avatarUrl,
 						}) 
@@ -155,20 +168,29 @@
 				this.placheholder = this.hint[index];
 			},
 			showHistory(){
-				this.show = true;
+				console.log(this.search_history.length);
+				if(this.search_history.length>0){
+					this.show = true;
+				}
 			},
 			closeHistory(){
 				this.show = false;
+			},
+			del(name){
+				console.log(name);
+			},
+			chooseHistory(name){
+				this.search_content= name;
 			}
 		},
 		created() {
 			uni.getStorage({
 				key:'search_history',
 				success: (res) => {
-					console.log(res);
+					this.search_history = res.data;
 				},
 				fail: () => {
-					console.log('fail');
+					/* 没取到的操作 */
 				}
 			})
 		}
@@ -217,7 +239,7 @@
 
 	.top-div {
 		width: 100%;
-		height: 15%;
+		height: 20%;
 		display: flex;
 		flex-direction: row;
 		margin-top: 3%;
@@ -387,5 +409,12 @@
 		background-color: #FFFFFF;
 		float: inline-start;
 		border-radius: 5px;
+		overflow-y:scroll;
+	}
+	/*历史标签的div*/
+	.history-tab-div{
+		width: 100%;
+		height: 100%;
+		margin: 0 auto;
 	}
 </style>

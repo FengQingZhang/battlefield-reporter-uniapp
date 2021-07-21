@@ -176,6 +176,28 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*标志css*/
 .mark {
 	background-color: #f0674e;
@@ -213,7 +235,7 @@
 }
 .top-div {
 	width: 100%;
-	height: 15%;
+	height: 20%;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -430,5 +452,12 @@
 	background-color: #FFFFFF;
 	float: inline-start;
 	border-radius: 5px;
+	overflow-y:scroll;
+}
+/*历史标签的div*/
+.history-tab-div{
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
 }
 

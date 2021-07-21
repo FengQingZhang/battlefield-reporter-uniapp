@@ -23,7 +23,8 @@
 		"backgroundColor": "#F8F8F8",
 		"usingComponents":{
 			"van-dialog":"wxcomponents/vant/dist/dialog/index",
-			"van-image":"wxcomponents/vant/dist/image/index"
+			"van-image":"wxcomponents/vant/dist/image/index",
+			"van-tag":"wxcomponents/vant/dist/tag/index"
 		}
 	}
 }

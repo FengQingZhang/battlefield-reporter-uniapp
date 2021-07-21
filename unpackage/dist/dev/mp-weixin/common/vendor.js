@@ -2060,9 +2060,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 17:
-/*!***********************************************************************************!*\
-  !*** G:/front_end_workspace/uni-app-demo/wxcomponents/vant/dist/dialog/dialog.js ***!
-  \***********************************************************************************/
+/*!**************************************************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/wxcomponents/vant/dist/dialog/dialog.js ***!
+  \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8235,9 +8235,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 4:
-/*!******************************************************!*\
-  !*** G:/front_end_workspace/uni-app-demo/pages.json ***!
-  \******************************************************/
+/*!*********************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/pages.json ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8246,9 +8246,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 40:
-/*!***********************************************************************************************!*\
-  !*** G:/front_end_workspace/uni-app-demo/uni_modules/uni-popup/components/uni-popup/popup.js ***!
-  \***********************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/uni_modules/uni-popup/components/uni-popup/popup.js ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8281,9 +8281,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 55:
-/*!*******************************************************************************************************************!*\
-  !*** G:/front_end_workspace/uni-app-demo/uni_modules/uni-transition/components/uni-transition/createAnimation.js ***!
-  \*******************************************************************************************************************/
+/*!**********************************************************************************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/uni_modules/uni-transition/components/uni-transition/createAnimation.js ***!
+  \**********************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8421,9 +8421,9 @@ function createAnimation(option, _this) {
 /***/ }),
 
 /***/ 61:
-/*!***********************************************************************************************!*\
-  !*** G:/front_end_workspace/uni-app-demo/uni_modules/uni-icons/components/uni-icons/icons.js ***!
-  \***********************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/uni_modules/uni-icons/components/uni-icons/icons.js ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

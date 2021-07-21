@@ -11,9 +11,9 @@
 /* 9 */,
 /* 10 */,
 /* 11 */
-/*!************************************************************************************!*\
-  !*** G:/front_end_workspace/uni-app-demo/main.js?{"page":"pages%2Findex%2Findex"} ***!
-  \************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/main.js?{"page":"pages%2Findex%2Findex"} ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26,9 +26,9 @@ createPage(_index.default);
 
 /***/ }),
 /* 12 */
-/*!*****************************************************************!*\
-  !*** G:/front_end_workspace/uni-app-demo/pages/index/index.vue ***!
-  \*****************************************************************/
+/*!********************************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/pages/index/index.vue ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66,9 +66,9 @@ component.options.__file = "pages/index/index.vue"
 
 /***/ }),
 /* 13 */
-/*!*************************************************************************************************************************!*\
-  !*** G:/front_end_workspace/uni-app-demo/pages/index/index.vue?vue&type=template&id=57280228&style=height%3A100%25%3B& ***!
-  \*************************************************************************************************************************/
+/*!****************************************************************************************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/pages/index/index.vue?vue&type=template&id=57280228&style=height%3A100%25%3B& ***!
+  \****************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns, recyclableRender, components */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -87,9 +87,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 /* 14 */
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/page-meta.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!G:/front_end_workspace/uni-app-demo/pages/index/index.vue?vue&type=template&id=57280228&style=height%3A100%25%3B& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/page-meta.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!G:/front_end_workspace/battlefield-reporter-uniapp/pages/index/index.vue?vue&type=template&id=57280228&style=height%3A100%25%3B& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns, recyclableRender, components */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -142,9 +142,9 @@ render._withStripped = true
 
 /***/ }),
 /* 15 */
-/*!******************************************************************************************!*\
-  !*** G:/front_end_workspace/uni-app-demo/pages/index/index.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/pages/index/index.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -157,14 +157,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 /* 16 */
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!G:/front_end_workspace/uni-app-demo/pages/index/index.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!G:/front_end_workspace/battlefield-reporter-uniapp/pages/index/index.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
 
 
 
@@ -345,16 +352,23 @@ var _dialog = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/
 //
 //
 //
-var _default = { data: function data() {return { title: 'Hello', search_content: '', platform: "origin", placheholder: "请输入origin用户名", hint: ["请输入origin用户名", "请输入xbox用户名", "请输入PS用户名"], platforms: ["origin", "xbl", "psn"], message: '', show: false };}, onLoad: function onLoad() {}, methods: { search: function search() {var _this = this;if (this.search_content == '') {this.message = '用户名不能为空';this.$refs['popup'].open();return false;}var that = this;uni.request({ url: "https://api.tracker.gg/api/v2/bfv/standard/search?platform=" + this.platform + "&query=" + this.search_content, success: function success(res) {var temp = res.data;console.log(res);console.log(temp.data);if (temp.data.length == 0) {_dialog.default.alert({ context: _this, title: '查询失败', message: '您查询的用户名不存在' }).then(function () {// close
-            });return false;}uni.navigateTo({ url: 'outcome?username=' + temp.data[0].platformUserHandle + '&avatarUrl=' + temp.data[0].avatarUrl });}, fail: function fail() {console.log("请求失败");} });}, changeTab: function changeTab(index) {this.platform = this.platforms[index];this.placheholder = this.hint[index];}, showHistory: function showHistory() {this.show = true;}, closeHistory: function closeHistory() {this.show = false;} }, created: function created() {uni.getStorage({ key: 'search_history', success: function success(res) {console.log(res);}, fail: function fail() {console.log('fail');} });} };exports.default = _default;
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { title: 'Hello', search_content: '', platform: "origin", placheholder: "请输入origin用户名", hint: ["请输入origin用户名", "请输入xbox用户名", "请输入PS用户名"], platforms: ["origin", "xbl", "psn"], message: '', show: false, search_history: [] };}, onLoad: function onLoad() {}, methods: { search: function search() {var _this = this;if (this.search_content == '') {this.message = '用户名不能为空';this.$refs['popup'].open();return false;}var that = this;uni.request({ url: "https://api.tracker.gg/api/v2/bfv/standard/search?platform=" + this.platform + "&query=" + this.search_content, success: function success(res) {var temp = res.data;console.log(res);console.log(temp.data);if (temp.data.length == 0) {_dialog.default.alert({ context: _this, title: '查询失败', message: '您查询的用户名不存在' }).then(function () {// close
+            });return false;}_this.search_history.push({ 'name': temp.data[0].platformUserHandle });var data = _this.search_history;console.log(data);uni.setStorage({ key: "search_history", data: data });uni.navigateTo({ url: 'outcome?username=' + temp.data[0].platformUserHandle + '&avatarUrl=' + temp.data[0].avatarUrl });}, fail: function fail() {console.log("请求失败");} });}, changeTab: function changeTab(index) {this.platform = this.platforms[index];this.placheholder = this.hint[index];}, showHistory: function showHistory() {console.log(this.search_history.length);if (this.search_history.length > 0) {this.show = true;}}, closeHistory: function closeHistory() {this.show = false;}, del: function del(name) {console.log(name);}, chooseHistory: function chooseHistory(name) {this.search_content = name;} }, created: function created() {var _this2 = this;uni.getStorage({ key: 'search_history', success: function success(res) {_this2.search_history = res.data;}, fail: function fail() {/* 没取到的操作 */} });} };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 17 */,
 /* 18 */
-/*!**************************************************************************************************!*\
-  !*** G:/front_end_workspace/uni-app-demo/pages/index/index.vue?vue&type=style&index=0&lang=css& ***!
-  \**************************************************************************************************/
+/*!*****************************************************************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/pages/index/index.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -367,9 +381,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 /* 19 */
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--6-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-2!./node_modules/postcss-loader/src??ref--6-oneOf-1-3!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!G:/front_end_workspace/uni-app-demo/pages/index/index.vue?vue&type=style&index=0&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--6-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--6-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--6-oneOf-1-2!./node_modules/postcss-loader/src??ref--6-oneOf-1-3!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!G:/front_end_workspace/battlefield-reporter-uniapp/pages/index/index.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
