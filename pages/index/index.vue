@@ -109,7 +109,7 @@
 				],
 				message: '',
 				show:false,
-				
+				search_history:[]
 			}
 		},
 		onLoad() {
@@ -140,7 +140,7 @@
 							})
 							return false;
 						}
-						
+						this.search_history.unshift(temp.data[0].platformUserHandle);
 						uni.navigateTo({
 							url:'outcome?username='+temp.data[0].platformUserHandle+'&avatarUrl='+temp.data[0].avatarUrl,
 						}) 
