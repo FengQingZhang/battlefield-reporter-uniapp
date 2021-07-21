@@ -1,0 +1,1 @@
+<view class="content"><view class="top-div"><view></view><van-image vue-id="5cec999a-1" width="15vw" height="15vw" fit="contain" src="{{head_src}}" radius="5px" data-com-type="wx" bind:__l="__l"></van-image></view></view>
