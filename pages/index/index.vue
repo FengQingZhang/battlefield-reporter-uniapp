@@ -1,5 +1,5 @@
 <template style="height:100%;">
-	<view class="content">
+	<view class="content" @click="closeHistory">
 		<uni-popup ref="popup" type="message">
 			<uni-popup-message type="warn" :message="message" :duration="2000"></uni-popup-message>
 		</uni-popup>
@@ -26,32 +26,32 @@
 							</ul>
 						</view>
 					</view>
-					<view style="width: 85%;margin: 0 auto; margin-top: 5%;height: 50%;">
-						<uni-search-bar :placeholder="placheholder" @focus="showHistory" @blur="closeHistory" :radius="5" @confirm="search" :cancelButton="none"
-							class="square_radius" v-model="search_content">
-							</uni-search-bar>
-							<view v-show="show" class="search-history">
-								<view class="history-tab-div">
-									<ul>
-										<li v-for="(item,index) in search_history" :key='index' style="display: inline; margin-left: 10rpx;">
-											<van-tag closeable size="large" type='primary' @close.stop='del(item.name)'>
-											<a @click.stop='chooseHistory(item.name)'> {{item.name}}</a>
+					<view ref="searchdiv" id='searchdiv' style="width: 85%;margin: 0 auto; margin-top: 5%;height: 50%;">
+						<uni-search-bar :placeholder="placheholder" @focus="showHistory" :radius="5" @confirm="search"
+							:cancelButton="none" class="square_radius" v-model="search_content">
+						</uni-search-bar>
+						<view v-show="show" class="search-history">
+							<van-tabs ref="vantabs" active="a" swipeable color='#f0674e'>
+								<van-tab title="我的关注" name="a">内容 1</van-tab>
+								<van-tab title="搜索历史" name="b">
+									<ul style="padding: 10rpx;">
+										<li v-for="(item,index) in search_history" :key='index'
+											style="display: inline; margin-left: 10rpx;">
+											<van-tag closeable size="large" type='primary' @close.stop='del(item)'>
+												<a @click.stop='chooseHistory(item)'> {{item}}</a>
 											</van-tag>
 										</li>
 									</ul>
-								</view>
-							</view>
+								</van-tab>
+							</van-tabs>
+						</view>
 					</view>
 				</view>
 				<view class="triangle">
 					<view class="triangle-mask"></view>
 				</view>
 			</view>
-			<!-- <view style="height:10%;z-index:1;" class="triangle">
-				<view class="background-mask"></view>
-			</view> -->
 		</view>
-		<!-- <view class="triangle"></view> -->
 		<view class="strategy-div">
 			<view class="strategy-center-div">
 				<view class="strategy-row">
@@ -97,6 +97,7 @@
 
 <script>
 	import Dialog from '../../wxcomponents/vant/dist/dialog/dialog';
+	import Ea from '../../common/config.js'
 	export default {
 		data() {
 			return {
@@ -115,8 +116,9 @@
 					"psn",
 				],
 				message: '',
-				show:false,
-				search_history:[]
+				show: false,
+				tab_show:false,
+				search_history: []
 			}
 		},
 		onLoad() {
@@ -131,32 +133,34 @@
 				}
 				let that = this;
 				uni.request({
-					url: "https://api.tracker.gg/api/v2/bfv/standard/search?platform=" + this.platform +
+					url: Ea.ea_find_user_url + "platform=" + this.platform +
 						"&query=" + this.search_content,
 					success: (res) => {
 						let temp = res.data;
 						console.log(res);
 						console.log(temp.data);
-						if(temp.data.length==0){
+						if (temp.data.length == 0) {
 							Dialog.alert({
 								context: this,
-								title:'查询失败',
-								message:'您查询的用户名不存在',
-							}).then(()=>{
+								title: '查询失败',
+								message: '您查询的用户名不存在',
+							}).then(() => {
 								// close
 							})
 							return false;
 						}
-						this.search_history.push({'name':temp.data[0].platformUserHandle});
-						let data =  this.search_history;
-						console.log(data);
-						uni.setStorage({
-							key:"search_history",
-							data:data
-						})
+						let name = temp.data[0].platformUserHandle;
+						if (this.search_history.indexOf(name) == -1) {
+							this.search_history.push(name);
+							let data = this.search_history;
+							uni.setStorage({
+								key: "search_history",
+								data: data
+							})
+						}
 						uni.navigateTo({
-							url:'outcome?username='+temp.data[0].platformUserHandle+'&avatarUrl='+temp.data[0].avatarUrl,
-						}) 
+							url: 'outcome?username=' + name + '&avatarUrl=' + temp.data[0].avatarUrl,
+						})
 					},
 					fail: () => {
 						console.log("请求失败");
@@ -167,25 +171,34 @@
 				this.platform = this.platforms[index];
 				this.placheholder = this.hint[index];
 			},
-			showHistory(){
-				console.log(this.search_history.length);
-				if(this.search_history.length>0){
-					this.show = true;
+			showHistory() {
+				if (this.search_history.length > 0) {
+					 this.show = true;
+					 this.$nextTick(() => {
+					    this.$refs['vantabs'].resize();
+					});
 				}
 			},
-			closeHistory(){
-				this.show = false;
+			closeHistory(event) {
+				let currentCli = this.selectComponent('#searchdiv');
+				console.log(currentCli);
+				if(currentCli){
+					if(!currentCli.contains(event.target)){
+						this.show = false;
+					}
+				}
 			},
-			del(name){
-				console.log(name);
+			del(name) {
+				let index = this.search_history.indexOf(name);
+				this.search_history.splice(index, 1);
 			},
-			chooseHistory(name){
-				this.search_content= name;
+			chooseHistory(name) {
+				this.search_content = name;
 			}
 		},
 		created() {
 			uni.getStorage({
-				key:'search_history',
+				key: 'search_history',
 				success: (res) => {
 					this.search_history = res.data;
 				},
@@ -202,7 +215,7 @@
 	.mark {
 		background-color: #f0674e;
 		width: 11%;
-		height: 83%;
+		height: 60%;
 		margin-top: 2%;
 		margin-left: 1%;
 		text-align: center;
@@ -277,6 +290,7 @@
 		align-items: center;
 		justify-content: center;
 	}
+
 	#tab ul {
 		width: 100%;
 		height: 100%;
@@ -295,12 +309,14 @@
 		justify-content: center;
 		align-items: center;
 	}
+
 	/* li 选中效果时背景颜色 */
 	#tab ul li.active {
 		border-radius: 5px;
 		background-color: #253258;
 
 	}
+
 	/*选中时增加底边框*/
 	#tab ul li.active icon {
 		border-bottom-color: #f0674e;
@@ -316,6 +332,7 @@
 		fill: var(--text-color);
 		padding: .5rem 0;
 	}
+
 	/*搜索历史背景渐变色*/
 	.search-history-div {
 		width: 100%;
@@ -326,13 +343,15 @@
 		justify-content: center;
 		align-items: center;
 	}
-	.triangle{
+
+	.triangle {
 		width: 100%;
 		height: 7%;
 		z-index: -1;
 		background-image: linear-gradient(90deg, #253258, #c4486f);
 	}
-	.triangle-mask{
+
+	.triangle-mask {
 		width: 100%;
 		height: 100%;
 		background: rgba(0, 0, 0, .4);
@@ -403,16 +422,18 @@
 		font-size: 8vw;
 		font-family: fantasy;
 	}
-	.search-history{
-		height: 21vw;
+
+	.search-history {
+		height: 30vw;
 		width: 100%;
 		background-color: #FFFFFF;
 		float: inline-start;
 		border-radius: 5px;
-		overflow-y:scroll;
+		overflow-y: scroll;
 	}
+
 	/*历史标签的div*/
-	.history-tab-div{
+	.history-tab-div {
 		width: 100%;
 		height: 100%;
 		margin: 0 auto;

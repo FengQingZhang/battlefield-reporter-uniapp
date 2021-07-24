@@ -198,11 +198,24 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*标志css*/
 .mark {
 	background-color: #f0674e;
 	width: 11%;
-	height: 83%;
+	height: 60%;
 	margin-top: 2%;
 	margin-left: 1%;
 	text-align: center;
@@ -350,7 +363,7 @@
 	-webkit-align-items: center;
 	        align-items: center;
 }
-.triangle{
+.triangle {
 	width: 100%;
 	height: 7%;
 	z-index: -1;
@@ -358,7 +371,7 @@
 	background-image: -webkit-linear-gradient(left, #253258, #c4486f);
 	background-image: linear-gradient(90deg, #253258, #c4486f);
 }
-.triangle-mask{
+.triangle-mask {
 	width: 100%;
 	height: 100%;
 	background: rgba(0, 0, 0, .4);
@@ -446,16 +459,16 @@
 	font-size: 8vw;
 	font-family: fantasy;
 }
-.search-history{
-	height: 21vw;
+.search-history {
+	height: 30vw;
 	width: 100%;
 	background-color: #FFFFFF;
 	float: inline-start;
 	border-radius: 5px;
-	overflow-y:scroll;
+	overflow-y: scroll;
 }
 /*历史标签的div*/
-.history-tab-div{
+.history-tab-div {
 	width: 100%;
 	height: 100%;
 	margin: 0 auto;
