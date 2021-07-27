@@ -2154,6 +2154,21 @@ Dialog;exports.default = _default;
 
 /***/ }),
 
+/***/ 18:
+/*!***************************************************************************!*\
+  !*** G:/front_end_workspace/battlefield-reporter-uniapp/common/config.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  EA: {
+    find_user_url: 'https://api.tracker.gg/api/v2/bfv/standard/search?',
+    find_standings_url: 'https://api.tracker.gg/api/v2/bfv/standard/profile/' } };exports.default = _default;
+
+/***/ }),
+
 /***/ 2:
 /*!******************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js ***!
@@ -8245,7 +8260,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 40:
+/***/ 41:
 /*!**************************************************************************************************************!*\
   !*** G:/front_end_workspace/battlefield-reporter-uniapp/uni_modules/uni-popup/components/uni-popup/popup.js ***!
   \**************************************************************************************************************/
@@ -8280,7 +8295,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 55:
+/***/ 56:
 /*!**********************************************************************************************************************************!*\
   !*** G:/front_end_workspace/battlefield-reporter-uniapp/uni_modules/uni-transition/components/uni-transition/createAnimation.js ***!
   \**********************************************************************************************************************************/
@@ -8420,7 +8435,7 @@ function createAnimation(option, _this) {
 
 /***/ }),
 
-/***/ 61:
+/***/ 62:
 /*!**************************************************************************************************************!*\
   !*** G:/front_end_workspace/battlefield-reporter-uniapp/uni_modules/uni-icons/components/uni-icons/icons.js ***!
   \**************************************************************************************************************/
@@ -8559,19 +8574,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   "cloud-download-filled": "\uE8E9",
   "headphones": "\uE8BF",
   "shop": "\uE609" };exports.default = _default;
-
-/***/ }),
-
-/***/ 71:
-/*!***************************************************************************!*\
-  !*** G:/front_end_workspace/battlefield-reporter-uniapp/common/config.js ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  ea_find_user_url: 'https://api.tracker.gg/api/v2/bfv/standard/search?' };exports.default = _default;
 
 /***/ })
 

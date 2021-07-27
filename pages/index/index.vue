@@ -97,7 +97,7 @@
 
 <script>
 	import Dialog from '../../wxcomponents/vant/dist/dialog/dialog';
-	import Ea from '../../common/config.js'
+	import url from '../../common/config.js'
 	export default {
 		data() {
 			return {
@@ -133,12 +133,11 @@
 				}
 				let that = this;
 				uni.request({
-					url: Ea.ea_find_user_url + "platform=" + this.platform +
+					url: url.EA.find_user_url + "platform=" + this.platform +
 						"&query=" + this.search_content,
 					success: (res) => {
+						console.log(res.data);
 						let temp = res.data;
-						console.log(res);
-						console.log(temp.data);
 						if (temp.data.length == 0) {
 							Dialog.alert({
 								context: this,
@@ -150,6 +149,8 @@
 							return false;
 						}
 						let name = temp.data[0].platformUserHandle;
+						let platformSlug = temp.data[0].platformSlug;
+						let avatarUrl = temp.data[0].avatarUrl;
 						if (this.search_history.indexOf(name) == -1) {
 							this.search_history.push(name);
 							let data = this.search_history;
@@ -159,7 +160,7 @@
 							})
 						}
 						uni.navigateTo({
-							url: 'outcome?username=' + name + '&avatarUrl=' + temp.data[0].avatarUrl,
+							url: 'outcome?username=' + name + '&avatarUrl=' + avatarUrl+'&platformSlug='+platformSlug,
 						})
 					},
 					fail: () => {
@@ -181,7 +182,6 @@
 			},
 			closeHistory(event) {
 				let currentCli = this.selectComponent('#searchdiv');
-				console.log(currentCli);
 				if(currentCli){
 					if(!currentCli.contains(event.target)){
 						this.show = false;
