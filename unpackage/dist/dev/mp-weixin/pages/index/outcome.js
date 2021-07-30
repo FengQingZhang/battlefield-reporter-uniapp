@@ -161,7 +161,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -192,8 +191,8 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
 //
 //
 //
-//
-var _default = { data: function data() {return { head_src: '', username: '', platformSlug: '' };}, methods: { getInfoByName: function getInfoByName() {uni.request({ url: _config.default.EA.find_standings_url + this.platformSlug + "/" + this.username, success: function success(res) {var temp = res.data;console.log(temp.data.segments[0]);}, fail: function fail() {console.log("请求失败");} });} }, onLoad: function onLoad(option) {this.head_src = option.avatarUrl;this.username = option.username;this.platformSlug = option.platformSlug;this.getInfoByName();} };exports.default = _default;
+var _default = { data: function data() {return { head_src: '', username: '', level: '', timePlayed: '', platformSlug: '' };}, methods: { getInfoByName: function getInfoByName() {var _this = this;uni.request({ url: _config.default.EA.find_standings_url + this.platformSlug + "/" + this.username, success: function success(res) {var data = res.data.data.segments[0].stats;_this.level = data.rank.value;console.log(data);}, fail: function fail() {console.log("请求失败");} });} }, onLoad: function onLoad(option) {this.head_src = option.avatarUrl;this.username = option.username;this.platformSlug = option.platformSlug;this.getInfoByName();
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

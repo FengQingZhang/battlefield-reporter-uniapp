@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="top-bg" style="background: url(/static/outcome/standings.png);background-size:cover;background-position: 50%;">
+		<view class="top-bg" style="background: url(https://trackercdn.com/cdn/tracker.gg/bfv/bfv-profile-hero1.jpg);background-size:cover;background-position: 50%;">
 			<view class="top-bg-mask">
 				<view class="top-div">
 					<view class="head-img">
@@ -13,12 +13,11 @@
 								<icon v-else-if="platformSlug=='xbl'" class="iconfont icon-xbox tab-icon"></icon>
 								<icon v-else-if="platformSlug=='psn'" class="iconfont icon-PS tab-icon"></icon>
 							</view>
-							<view style="color: #FFFFFF;">{{username}}</view>
+							<view style="color: #FFFFFF;margin-left: 1rpx;">{{username}}</view>
 						</view>
-						<br>
-						<view class="user-info-row">
-							<view>
-								
+						<view class="user-info-row" style="height: 20%;">
+							<view style="width:100rpx;height:20rpx;color: #FFFFFF;">
+								{{level}}
 							</view>
 							<view></view>
 						</view>
@@ -36,6 +35,8 @@
 			return {
 				head_src: '',
 				username: '',
+				level:'',
+				timePlayed:'',
 				platformSlug: '',
 			}
 		},
@@ -44,8 +45,9 @@
 				uni.request({
 					url: url.EA.find_standings_url + this.platformSlug + "/" + this.username,
 					success: (res) => {
-						let temp = res.data;
-						console.log(temp.data.segments[0]);
+						let data = res.data.data.segments[0].stats;
+						this.level = data.rank.value;
+						console.log(data);
 					},
 					fail: () => {
 						console.log("请求失败");
@@ -107,7 +109,7 @@
 	}
 	.user-info-row{
 		width: 100%;
-		height: 50%;
+		height: 40%;
 		padding-left: 5%;
 		display: flex;
 		flex-direction: row;

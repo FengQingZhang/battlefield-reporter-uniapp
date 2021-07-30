@@ -1,5 +1,5 @@
 <template style="height:100%;">
-	<view class="content" @click="closeHistory">
+	<view class="content">
 		<uni-popup ref="popup" type="message">
 			<uni-popup-message type="warn" :message="message" :duration="2000"></uni-popup-message>
 		</uni-popup>
@@ -31,6 +31,7 @@
 							:cancelButton="none" class="square_radius" v-model="search_content">
 						</uni-search-bar>
 						<view v-show="show" class="search-history">
+							<!-- <uni-icons type="close" size="25" style="float: right;" @click="closeHistory"> -->
 							<van-tabs ref="vantabs" active="a" swipeable color='#f0674e'>
 								<van-tab title="我的关注" name="a">内容 1</van-tab>
 								<van-tab title="搜索历史" name="b">
@@ -171,6 +172,7 @@
 			changeTab(index) {
 				this.platform = this.platforms[index];
 				this.placheholder = this.hint[index];
+				this.closeHistory();
 			},
 			showHistory() {
 				if (this.search_history.length > 0) {
@@ -180,13 +182,14 @@
 					});
 				}
 			},
-			closeHistory(event) {
-				let currentCli = this.selectComponent('#searchdiv');
-				if(currentCli){
+			closeHistory() {
+				//console.log(currentCli)
+				/* if(currentCli){
 					if(!currentCli.contains(event.target)){
 						this.show = false;
 					}
-				}
+				} */
+				this.show = false;
 			},
 			del(name) {
 				let index = this.search_history.indexOf(name);
@@ -194,6 +197,7 @@
 			},
 			chooseHistory(name) {
 				this.search_content = name;
+				this.closeHistory();
 			}
 		},
 		created() {
