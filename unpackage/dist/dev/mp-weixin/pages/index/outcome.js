@@ -97,6 +97,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var f0 = _vm._f("timePlayed_filter")(_vm.timePlayed)
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        f0: f0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -161,6 +171,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -191,7 +218,43 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
 //
 //
 //
-var _default = { data: function data() {return { head_src: '', username: '', level: '', timePlayed: '', platformSlug: '' };}, methods: { getInfoByName: function getInfoByName() {var _this = this;uni.request({ url: _config.default.EA.find_standings_url + this.platformSlug + "/" + this.username, success: function success(res) {var data = res.data.data.segments[0].stats;_this.level = data.rank.value;console.log(data);}, fail: function fail() {console.log("请求失败");} });} }, onLoad: function onLoad(option) {this.head_src = option.avatarUrl;this.username = option.username;this.platformSlug = option.platformSlug;this.getInfoByName();
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { head_src: '', username: '', level: '', timePlayed: '', platformSlug: '', overview: [] };}, methods: { getInfoByName: function getInfoByName() {var _this = this;uni.request({ url: _config.default.EA.find_standings_url + this.platformSlug + "/" + this.username, success: function success(res) {var data = res.data.data.segments[0].stats;_this.level = data.rank.value;_this.timePlayed = data.timePlayed.displayValue;_this.overview.push({ 'label': 'SPM', 'value': data.scorePerMinute.displayValue });_this.overview.push({ 'label': 'KPM', 'value': data.killsPerMinute.displayValue });_this.overview.push({ 'label': 'K/D', 'value': data.kdRatio.displayValue });_this.overview.push({ 'label': '命中率', 'value': data.shotsAccuracy.displayValue });_this.overview.push({ 'label': '胜率', 'value': data.wlPercentage.displayValue });_this.overview.push({ 'label': '击杀数', 'value': data.kills.displayValue });_this.overview.push({ 'label': '死亡数', 'value': data.deaths.displayValue });_this.overview.push({ 'label': '爆头数', 'value': data.headshots.displayValue });var num = data.headshots.value / data.kills.value * 100;_this.overview.push({ 'label': '爆头率', 'value': num.toPrecision(3) + "%" });_this.overview.push({ 'label': '胜利场次', 'value': data.wins.displayValue });var count = data.wins.vlaue + data.losses.value;var kill = data.kills.vlaue / count * 100;var death = data.deaths.value / count * 100;_this.overview.push({ 'label': '场均击杀', 'value': kill.toPrecision(3) + "%" });_this.overview.push({ 'label': '场均死亡', 'value': death.toPrecision(3) + "%" });_this.overview.push({ 'label': '最远爆头', 'value': data.longestHeadshot.displayValue });_this.overview.push({ 'label': '最高连杀', 'value': data.killStreak.displayValue });_this.overview.push({ 'label': '失败场次', 'value': data.losses.displayValue });console.log(data);}, fail: function fail() {console.log("请求失败");} });} },
+  filters: {
+    timePlayed_filter: function timePlayed_filter(val) {
+      if (val.indexOf("h") != -1) {
+        var temp = val.substring(0, val.indexOf("h")) + "小时";
+        return temp;
+      } else if (val.indexOf("m") != -1) {
+        var _temp = val.substring(0, val.indexOf("m")) + "分钟";
+        return _temp;
+      } else {
+        return val;
+      }
+    } },
+
+  onLoad: function onLoad(option) {
+    this.head_src = option.avatarUrl;
+    this.username = option.username;
+    this.platformSlug = option.platformSlug;
+    this.getInfoByName();
+    this.$refs['vantabs'].resize();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

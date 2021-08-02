@@ -17,6 +17,9 @@
     "van-tab": "wxcomponents/vant/dist/tab/index",
     "van-tabs": "wxcomponents/vant/dist/tabs/index",
     "van-row": "wxcomponents/vant/dist/row/index",
-    "van-col": "wxcomponents/vant/dist/col/index"
+    "van-col": "wxcomponents/vant/dist/col/index",
+    "van-icon": "wxcomponents/vant/dist/icon/index",
+    "van-grid": "wxcomponents/vant/dist/grid/index",
+    "van-grid-item": "wxcomponents/vant/dist/grid-item/index"
   }
 }
