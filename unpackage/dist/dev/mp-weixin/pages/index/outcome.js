@@ -188,6 +188,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
 var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -235,18 +244,65 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
 //
 //
 //
-var _default = { data: function data() {return { head_src: '', username: '', level: '', timePlayed: '', platformSlug: '', overview: [] };}, methods: { getInfoByName: function getInfoByName() {var _this = this;uni.request({ url: _config.default.EA.find_standings_url + this.platformSlug + "/" + this.username, success: function success(res) {var data = res.data.data.segments[0].stats;_this.level = data.rank.value;_this.timePlayed = data.timePlayed.displayValue;_this.overview.push({ 'label': 'SPM', 'value': data.scorePerMinute.displayValue });_this.overview.push({ 'label': 'KPM', 'value': data.killsPerMinute.displayValue });_this.overview.push({ 'label': 'K/D', 'value': data.kdRatio.displayValue });_this.overview.push({ 'label': '命中率', 'value': data.shotsAccuracy.displayValue });_this.overview.push({ 'label': '胜率', 'value': data.wlPercentage.displayValue });_this.overview.push({ 'label': '击杀数', 'value': data.kills.displayValue });_this.overview.push({ 'label': '死亡数', 'value': data.deaths.displayValue });_this.overview.push({ 'label': '爆头数', 'value': data.headshots.displayValue });var num = data.headshots.value / data.kills.value * 100;_this.overview.push({ 'label': '爆头率', 'value': num.toPrecision(3) + "%" });_this.overview.push({ 'label': '胜利场次', 'value': data.wins.displayValue });var count = data.wins.vlaue + data.losses.value;var kill = data.kills.vlaue / count * 100;var death = data.deaths.value / count * 100;_this.overview.push({ 'label': '场均击杀', 'value': kill.toPrecision(3) + "%" });_this.overview.push({ 'label': '场均死亡', 'value': death.toPrecision(3) + "%" });_this.overview.push({ 'label': '最远爆头', 'value': data.longestHeadshot.displayValue });_this.overview.push({ 'label': '最高连杀', 'value': data.killStreak.displayValue });_this.overview.push({ 'label': '失败场次', 'value': data.losses.displayValue });console.log(data);}, fail: function fail() {console.log("请求失败");} });} },
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { head_src: '', username: '', level: '', timePlayed: '', platformSlug: '', overview: [] };}, methods: { getInfoByName: function getInfoByName() {var _this = this;uni.request({ url: _config.default.EA.find_standings_url + this.platformSlug + "/" + this.username, success: function success(res) {var data = res.data.data.segments[0].stats;var num = data.headshots.value / data.kills.value * 100;var headshots_rate = num.toPrecision(3) + '%';var count = data.wins.value + data.losses.value;var kill = data.kills.value / count;var kill_rate = kill.toPrecision(3) + '%';var death = data.deaths.value / count;var death_rate = death.toPrecision(3) + '%';_this.level = data.rank.value;_this.timePlayed = data.timePlayed.displayValue;_this.overview.push({ 'label': 'SPM', 'value': data.scorePerMinute.displayValue });_this.overview.push({ 'label': 'KPM', 'value': data.killsPerMinute.displayValue });_this.overview.push({ 'label': 'K/D', 'value': data.kdRatio.displayValue });_this.overview.push({ 'label': '命中率', 'value': data.shotsAccuracy.displayValue });_this.overview.push({ 'label': '胜率', 'value': data.wlPercentage.displayValue });_this.overview.push({ 'label': '击杀数', 'value': data.kills.displayValue });_this.overview.push({ 'label': '死亡数', 'value': data.deaths.displayValue });_this.overview.push({
+            'label': '爆头数',
+            'value': data.headshots.displayValue });
+
+          _this.overview.push({
+            'label': '爆头率',
+            'value': headshots_rate });
+
+          _this.overview.push({
+            'label': '胜利场次',
+            'value': data.wins.displayValue });
+
+          _this.overview.push({
+            'label': '场均击杀',
+            'value': kill_rate });
+
+          _this.overview.push({
+            'label': '场均死亡',
+            'value': death_rate });
+
+          var longes = parseInt(data.longestHeadshot.value);
+          _this.overview.push({
+            'label': '最远爆头',
+            'value': longes });
+
+          _this.overview.push({
+            'label': '最高连杀',
+            'value': data.killStreak.displayValue });
+
+          _this.overview.push({
+            'label': '失败场次',
+            'value': data.losses.displayValue });
+
+        },
+        fail: function fail() {
+          console.log("请求失败");
+        } });
+
+    } },
+
   filters: {
     timePlayed_filter: function timePlayed_filter(val) {
+      var temp = val;
       if (val.indexOf("h") != -1) {
-        var temp = val.substring(0, val.indexOf("h")) + "小时";
-        return temp;
-      } else if (val.indexOf("m") != -1) {
-        var _temp = val.substring(0, val.indexOf("m")) + "分钟";
-        return _temp;
-      } else {
-        return val;
+        temp = val.replace("h", "小时");
       }
+      if (val.indexOf("m") != -1) {
+        temp = val.replace("m", "分钟");
+      }
+      return temp;
     } },
 
   onLoad: function onLoad(option) {

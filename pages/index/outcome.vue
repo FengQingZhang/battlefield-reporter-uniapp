@@ -1,10 +1,12 @@
 <template>
 	<view class="content">
-		<view class="top-bg" style="background: url(https://trackercdn.com/cdn/tracker.gg/bfv/bfv-profile-hero1.jpg);background-size:cover;background-position: 50%;">
+		<view class="top-bg"
+			style="background: url(https://trackercdn.com/cdn/tracker.gg/bfv/bfv-profile-hero1.jpg);background-size:cover;background-position: 50%;">
 			<view class="top-bg-mask">
 				<view class="top-div">
 					<view class="head-img">
-						<van-image width="15vw" height="15vw" fit="contain" :src="head_src" round custom-class="head-img-border" />
+						<van-image width="15vw" height="15vw" fit="contain" :src="head_src" round
+							custom-class="head-img-border" />
 					</view>
 					<view class="user-info-div">
 						<view class="user-info-row">
@@ -19,28 +21,35 @@
 							<view>
 								<van-tag mark type="success">等级:{{level}}</van-tag>
 							</view>
-							<view style="margin-left:5%;">
-								<van-tag mark type="warning">时长:{{timePlayed|timePlayed_filter}}</van-tag>
-							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<van-tabs ref="vantabs" active="a" nav-class="my_nav" title-inactive-color="#FFFFFF" title-active-color="#FFFFFF" >
-		  <van-tab title="总览" name="a">
-			  <van-grid square>
-			    <van-grid-item :key='index' use-slot v-for="(item,index) in overview">
-					<ul>
-						<li>{{item.label}}</li>
-						<li>{{item.value}}</li>
-					</ul>
-				</van-grid-item>
-			  </van-grid>
-		  </van-tab>
-		  <van-tab title="枪械" name="b">内容 2</van-tab>
-		  <van-tab title="载具" name="c">内容 3</van-tab>
-		  <van-tab title="对局" name="d">内容 4</van-tab>
+		<van-tabs ref="vantabs" active="a" nav-class="my_nav" title-inactive-color="#FFFFFF"
+			title-active-color="#FFFFFF">
+			<van-tab title="总览" name="a">
+				<view class="timeplayed-div">
+					<view style="width: 10%;">
+						<icon class="iconfont icon-youxi tab-icon" style="font-size: 10vw;"></icon>
+					</view>
+					<view class="timeplayed-text-div" style="width: 80%;margin-left:3%;">
+						<view style="color: #FFFFFF;">游戏时长</view>
+						<view style="color: #78b5e2;">{{timePlayed|timePlayed_filter}}</view>
+					</view>
+				</view>
+				<van-grid square column-num="5">
+					<van-grid-item :key='index' use-slot v-for="(item,index) in overview">
+						<ul>
+							<li style="color: #78b5e2;">{{item.label}}</li>
+							<li style="color: #efefef;font-size: 1.25rem;white-space: nowrap;">{{item.value}}</li>
+						</ul>
+					</van-grid-item>
+				</van-grid>
+			</van-tab>
+			<van-tab title="枪械" name="b">内容 2</van-tab>
+			<van-tab title="载具" name="c">内容 3</van-tab>
+			<van-tab title="对局" name="d">内容 4</van-tab>
 		</van-tabs>
 	</view>
 </template>
@@ -52,11 +61,11 @@
 			return {
 				head_src: '',
 				username: '',
-				level:'',
-				timePlayed:'',
+				level: '',
+				timePlayed: '',
 				platformSlug: '',
-				overview:[],
-				
+				overview: [],
+
 			}
 		},
 		methods: {
@@ -65,28 +74,76 @@
 					url: url.EA.find_standings_url + this.platformSlug + "/" + this.username,
 					success: (res) => {
 						let data = res.data.data.segments[0].stats;
+						let num = (data.headshots.value / data.kills.value) * 100;
+						let headshots_rate = num.toPrecision(3) + '%';
+						let count = data.wins.value + data.losses.value;
+						let kill = data.kills.value / count;
+						let kill_rate = kill.toPrecision(3) + '%';
+						let death = data.deaths.value / count;
+						let death_rate = death.toPrecision(3) + '%';
 						this.level = data.rank.value;
 						this.timePlayed = data.timePlayed.displayValue;
-						this.overview.push({'label':'SPM','value':data.scorePerMinute.displayValue});
-						this.overview.push({'label':'KPM','value':data.killsPerMinute.displayValue});
-						this.overview.push({'label':'K/D','value':data.kdRatio.displayValue});
-						this.overview.push({'label':'命中率','value':data.shotsAccuracy.displayValue});
-						this.overview.push({'label':'胜率','value':data.wlPercentage.displayValue});
-						this.overview.push({'label':'击杀数','value':data.kills.displayValue});
-						this.overview.push({'label':'死亡数','value':data.deaths.displayValue});
-						this.overview.push({'label':'爆头数','value':data.headshots.displayValue});
-						let  num = (data.headshots.value/data.kills.value)*100;
-						this.overview.push({'label':'爆头率','value':num.toPrecision(3)+"%"});
-						this.overview.push({'label':'胜利场次','value':data.wins.displayValue});
-						let count = data.wins.vlaue+data.losses.value;
-						let kill = (data.kills.vlaue/count)*100;
-						let death = (data.deaths.value/count)*100;
-						this.overview.push({'label':'场均击杀','value':kill.toPrecision(3)+"%"});
-						this.overview.push({'label':'场均死亡','value':death.toPrecision(3)+"%"});
-						this.overview.push({'label':'最远爆头','value':data.longestHeadshot.displayValue});
-						this.overview.push({'label':'最高连杀','value':data.killStreak.displayValue});
-						this.overview.push({'label':'失败场次','value':data.losses.displayValue});
-						console.log(data);
+						this.overview.push({
+							'label': 'SPM',
+							'value': data.scorePerMinute.displayValue
+						});
+						this.overview.push({
+							'label': 'KPM',
+							'value': data.killsPerMinute.displayValue
+						});
+						this.overview.push({
+							'label': 'K/D',
+							'value': data.kdRatio.displayValue
+						});
+						this.overview.push({
+							'label': '命中率',
+							'value': data.shotsAccuracy.displayValue
+						});
+						this.overview.push({
+							'label': '胜率',
+							'value': data.wlPercentage.displayValue
+						});
+						this.overview.push({
+							'label': '击杀数',
+							'value': data.kills.displayValue
+						});
+						this.overview.push({
+							'label': '死亡数',
+							'value': data.deaths.displayValue
+						});
+						this.overview.push({
+							'label': '爆头数',
+							'value': data.headshots.displayValue
+						});
+						this.overview.push({
+							'label': '爆头率',
+							'value': headshots_rate
+						});
+						this.overview.push({
+							'label': '胜利场次',
+							'value': data.wins.displayValue
+						});
+						this.overview.push({
+							'label': '场均击杀',
+							'value': kill_rate
+						});
+						this.overview.push({
+							'label': '场均死亡',
+							'value': death_rate
+						});
+						let longes = parseInt(data.longestHeadshot.value);
+						this.overview.push({
+							'label': '最远爆头',
+							'value': longes
+						});
+						this.overview.push({
+							'label': '最高连杀',
+							'value': data.killStreak.displayValue
+						});
+						this.overview.push({
+							'label': '失败场次',
+							'value': data.losses.displayValue
+						});
 					},
 					fail: () => {
 						console.log("请求失败");
@@ -94,17 +151,16 @@
 				})
 			},
 		},
-		filters:{
-			timePlayed_filter(val){
-				if(val.indexOf("h")!=-1){
-					let temp = val.substring(0,val.indexOf("h"))+"小时";
-					return temp;
-				}else if(val.indexOf("m")!=-1){
-					let temp = val.substring(0,val.indexOf("m"))+"分钟";
-					return temp;
-				}else{
-					return val;
-				}
+		filters: {
+			timePlayed_filter(val) {
+				let temp=val;
+				if (val.indexOf("h") != -1) {
+					temp = val.replace("h","小时")
+				} 
+				if (val.indexOf("m") != -1) {
+					temp = val.replace("m","分钟")
+				} 
+				return temp;
 			}
 		},
 		onLoad(option) {
@@ -134,33 +190,39 @@
 		height: 14%;
 		width: 100%;
 	}
-	.top-bg-mask{
+
+	.top-bg-mask {
 		background: rgba(0, 0, 0, .4);
 		width: 100%;
 		height: 100%;
 	}
+
 	.head-img {
 		width: 20%;
 		height: 100%;
 	}
-	.head-img-border{
+
+	.head-img-border {
 		border-style: solid;
 		border-color: #F0F0F0;
 		border-width: 2px;
-		margin-top:40rpx;
+		margin-top: 40rpx;
 	}
+
 	.tab-icon {
 		font-size: 5vw;
 		color: #FFFFFF;
 	}
-	.user-info-div{
-		width:80%;
+
+	.user-info-div {
+		width: 80%;
 		height: 85%;
 		margin-top: 5%;
 		display: flex;
 		flex-direction: column;
 	}
-	.user-info-row{
+
+	.user-info-row {
 		width: 100%;
 		height: 40%;
 		padding-left: 5%;
@@ -168,16 +230,34 @@
 		flex-direction: row;
 		align-items: center;
 	}
-	.content_div{
-		height:86%;
+
+	.content_div {
+		height: 86%;
 		width: 100%;
 	}
-	.my_nav{
+
+	.my_nav {
 		background-color: #364e80;
 	}
-	.view-content{
+
+	.view-content {
 		width: 100%;
 		height: 100%;
 		background-color: #111b2b;
+	}
+
+	.grid-content {
+		background-color: #364e80;
+	}
+	.timeplayed-div{
+		width: 100%;
+		height: 10%;
+		background-color: #1b2640;
+		display: flex;
+		flex-direction: row;
+	}
+	.timeplayed-text-div{
+		display: flex;
+		flex-direction: column;
 	}
 </style>
