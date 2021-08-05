@@ -263,6 +263,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _dialog = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant/dist/dialog/dialog */ 17));
 var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
@@ -362,21 +377,29 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
 //
 //
 //
-var _default = { data: function data() {return { title: 'Hello', search_content: '', platform: "origin", placheholder: "请输入origin用户名", hint: ["请输入origin用户名", "请输入xbox用户名", "请输入PS用户名"], platforms: ["origin", "xbl", "psn"], message: '', show: false, tab_show: false, search_history: [] };}, onLoad: function onLoad() {}, methods: { search: function search() {var _this = this;if (this.search_content == '') {this.message = '用户名不能为空';this.$refs['popup'].open();return false;}var that = this;uni.request({ url: _config.default.EA.find_user_url + "platform=" + this.platform + "&query=" + this.search_content, success: function success(res) {console.log(res.data);var temp = res.data;if (temp.data.length == 0) {_dialog.default.alert({ context: _this, title: '查询失败', message: '您查询的用户名不存在' }).then(function () {// close
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { title: 'Hello', search_content: '', platform: "origin", placheholder: "请输入origin用户名", hint: ["请输入origin用户名", "请输入xbox用户名", "请输入PS用户名"], platforms: ["origin", "xbl", "psn"], message: '', show: false, tab_show: false, search_history: [] };}, onLoad: function onLoad() {}, methods: { search: function search() {var _this = this;if (this.search_content == '') {this.message = '用户名不能为空';this.$refs['popup'].open();return false;}var that = this;uni.request({ url: _config.default.EA.find_user_url + "platform=" + this.platform + "&query=" + this.search_content, success: function success(res) {//console.log(res.data);
+          var temp = res.data;if (temp.data.length == 0) {_dialog.default.alert({ context: _this, title: '查询失败', message: '您查询的用户名不存在' }).then(function () {// close
             });return false;}var name = temp.data[0].platformUserHandle;var platformSlug = temp.data[0].platformSlug;var avatarUrl = temp.data[0].avatarUrl;if (_this.search_history.indexOf(name) == -1) {_this.search_history.push(name);var data = _this.search_history;uni.setStorage({ key: "search_history", data: data });}uni.navigateTo({ url: 'outcome?username=' + name + '&avatarUrl=' + avatarUrl + '&platformSlug=' + platformSlug });}, fail: function fail() {console.log("请求失败");} });}, changeTab: function changeTab(index) {this.platform = this.platforms[index];this.placheholder = this.hint[index];this.closeHistory();}, showHistory: function showHistory() {var _this2 = this;if (this.search_history.length > 0) {this.show = true;this.$nextTick(function () {_this2.$refs['vantabs'].resize();});}}, closeHistory: function closeHistory() {//console.log(currentCli)
       /* if(currentCli){
       	if(!currentCli.contains(event.target)){
       		this.show = false;
       	}
-      } */this.show = false;}, del: function del(name) {var index = this.search_history.indexOf(name);this.search_history.splice(index, 1);}, chooseHistory: function chooseHistory(name) {this.search_content = name;this.closeHistory();} }, created: function created() {var _this3 = this;uni.getStorage({ key: 'search_history',
-      success: function success(res) {
-        _this3.search_history = res.data;
-      },
-      fail: function fail() {
-        /* 没取到的操作 */
-      } });
-
-  } };exports.default = _default;
+      } */this.show = false;}, del: function del(name) {var index = this.search_history.indexOf(name);this.search_history.splice(index, 1);}, chooseHistory: function chooseHistory(name) {this.search_content = name;this.closeHistory();} }, created: function created() {var _this3 = this;uni.getStorage({ key: 'search_history', success: function success(res) {_this3.search_history = res.data;}, fail: function fail() {/* 没取到的操作 */} });} };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

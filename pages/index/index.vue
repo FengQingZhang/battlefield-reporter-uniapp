@@ -57,7 +57,12 @@
 			<view class="strategy-center-div">
 				<view class="strategy-row">
 					<view class="strategy-row-picture-div">
-						<icon class="iconfont icon-ak strategy-icon"></icon>
+						<van-image
+						  width="6rem"
+						  height="5rem"
+						  fit="contain"
+						  src="http://qxcjfm2yn.hb-bkt.clouddn.com/STG44.png"
+						/>
 					</view>
 					<view class="strategy-row-text-div"
 						style="background:url(/static/index/m1.jpg);background-size: 100% 100%;border-radius: 0 0 5px 5px;">
@@ -68,7 +73,12 @@
 				</view>
 				<view class="strategy-row">
 					<view class="strategy-row-picture-div">
-						<icon class="iconfont icon-tanke strategy-icon"></icon>
+						<van-image
+						  width="5rem"
+						  height="5rem"
+						  fit="contain"
+						  src="http://qxcjfm2yn.hb-bkt.clouddn.com/LVT.png"
+						/>
 					</view>
 					<view class="strategy-row-text-div"
 						style="background:url(/static/index/dogtank.jpeg);background-size: 100% 100%;border-radius: 0 0 5px 5px;">
@@ -79,7 +89,12 @@
 				</view>
 				<view class="strategy-row">
 					<view class="strategy-row-picture-div">
-						<icon class="iconfont icon-zhandouji strategy-icon" style="font-size:9vw;"></icon>
+						<van-image
+						  width="4rem"
+						  height="5rem"
+						  fit="contain"
+						  src="http://qxcjfm2yn.hb-bkt.clouddn.com/JU88A.png"
+						/>
 					</view>
 					<view class="strategy-row-text-div"
 						style="background: url(/static/index/f4u.jpg);background-size: 100% 100%;border-radius: 0 0 5px 5px;">
@@ -137,7 +152,7 @@
 					url: url.EA.find_user_url + "platform=" + this.platform +
 						"&query=" + this.search_content,
 					success: (res) => {
-						console.log(res.data);
+						//console.log(res.data);
 						let temp = res.data;
 						if (temp.data.length == 0) {
 							Dialog.alert({

@@ -46,6 +46,22 @@
 						</ul>
 					</van-grid-item>
 				</van-grid>
+				<view class="top-pawn-div" style="background-image:url(https://trackercdn.com/cdn/tracker.gg/bfv/top-class-bg.jpg);background-size: 100% 100%;">
+					<view style="width: 100%;display: flex;flex-direction:row;">
+						<view style="width: 10%;">
+							<icon class="iconfont icon-jinpai" style="font-size: 10vw;color: #F0E68C;"></icon>
+						</view> 
+						<view style="width: 85%;color: #efefef;font-size: large;padding-top: 2%;">
+								最佳兵种
+						</view>
+					</view>
+					<view style="width:100%;display: flex;flex-direction: row;">
+						<view style="width: 40%;display: flex;flex-direction: column;text-align:center;">
+							
+						</view>
+						<view style="width: 60%;"></view>
+					</view>
+				</view>
 			</van-tab>
 			<van-tab title="枪械" name="b">内容 2</van-tab>
 			<van-tab title="载具" name="c">内容 3</van-tab>
@@ -74,6 +90,7 @@
 					url: url.EA.find_standings_url + this.platformSlug + "/" + this.username,
 					success: (res) => {
 						let data = res.data.data.segments[0].stats;
+						console.log(res.data.data);
 						let num = (data.headshots.value / data.kills.value) * 100;
 						let headshots_rate = num.toPrecision(3) + '%';
 						let count = data.wins.value + data.losses.value;
@@ -144,12 +161,35 @@
 							'label': '失败场次',
 							'value': data.losses.displayValue
 						});
+						this.getTopArm(data.scoreAssault.vlaue,data.scoreMedic.value,data.scoreSupport.value,data.scoreRecon.value);
 					},
 					fail: () => {
 						console.log("请求失败");
 					}
 				})
 			},
+			//通过数据得出最佳兵种
+			getTopArm(scoreAssault,scoreMedic,scoreSupport,scoreRecon){
+				let list = Array.from([scoreMedic,scoreSupport,scoreRecon]);
+				console.log(list);
+				let temp = scoreAssault;
+				for(let val of list.values()){
+					if(val>temp){
+						temp=val;
+					}
+				}
+				console.log(temp);
+				if(temp==scoreAssault){
+					console.log("突击兵为最佳兵种");
+				}else if(temp==scoreMedic){
+					console.log("医疗兵为最佳兵种");
+				}else if(temp==scoreSupport){
+					console.log("支援兵为最佳兵种");
+				}else{
+					console.log("狙击兵为最佳兵种")
+				}				
+				
+			}
 		},
 		filters: {
 			timePlayed_filter(val) {
@@ -257,6 +297,12 @@
 		flex-direction: row;
 	}
 	.timeplayed-text-div{
+		display: flex;
+		flex-direction: column;
+	}
+	.top-pawn-div{
+		width: 100%;
+		height: 30%;
 		display: flex;
 		flex-direction: column;
 	}

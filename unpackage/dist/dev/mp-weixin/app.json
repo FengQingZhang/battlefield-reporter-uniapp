@@ -22,5 +22,6 @@
     "van-grid": "wxcomponents/vant/dist/grid/index",
     "van-grid-item": "wxcomponents/vant/dist/grid-item/index",
     "van-divider": "wxcomponents/vant/dist/divider/index"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
