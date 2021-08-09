@@ -121,15 +121,15 @@
 
 
 	.uni-collapse-cell--hover {
-		background-color: $uni-bg-color-hover;
+		background-color: #1B2640;
 	}
 
 	.uni-collapse-cell--open {
-		background-color: $uni-bg-color-hover;
+		background-color: #1B2640;
 	}
 
 	.uni-collapse-cell--disabled {
-		background-color: $uni-bg-color-hover;
+		background-color: #1B2640;
 		/* #ifdef H5 */
 		cursor: not-allowed !important;
 		/* #endif */
@@ -163,11 +163,15 @@
 		align-items: center;
 		/* #ifdef H5 */
 		cursor: pointer;
+		background-color: #1B2640;
+		color: #FFFFFF;
 		/* #endif */
 	}
 
 	.uni-collapse-cell__title:active {
-		background-color: $uni-bg-color-hover;
+		//background-color: $uni-bg-color-hover;
+		background-color: #1B2640;
+		color: #FFFFFF;
 	}
 
 	.uni-collapse-cell__title-img {

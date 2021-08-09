@@ -1,5 +1,9 @@
 {
   "navigationBarTitleText": "Battlefield V",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "aui-loading": "/components/aui-loading/aui-loading",
+    "uni-collapse": "/uni_modules/uni-collapse/components/uni-collapse/uni-collapse",
+    "uni-collapse-item": "/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item"
+  }
 }

@@ -93,6 +93,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    auiLoading: function() {
+      return __webpack_require__.e(/*! import() | components/aui-loading/aui-loading */ "components/aui-loading/aui-loading").then(__webpack_require__.bind(null, /*! @/components/aui-loading/aui-loading.vue */ 72))
+    },
+    uniCollapse: function() {
+      return __webpack_require__.e(/*! import() | uni_modules/uni-collapse/components/uni-collapse/uni-collapse */ "uni_modules/uni-collapse/components/uni-collapse/uni-collapse").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue */ 80))
+    },
+    uniCollapseItem: function() {
+      return __webpack_require__.e(/*! import() | uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item */ "uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue */ 87))
+    }
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -213,8 +242,85 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it.return != null) it.return();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var auiLoading = function auiLoading() {__webpack_require__.e(/*! require.ensure | components/aui-loading/aui-loading */ "components/aui-loading/aui-loading").then((function () {return resolve(__webpack_require__(/*! @/components/aui-loading/aui-loading.vue */ 72));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
+  components: {
+    auiLoading: auiLoading },
+
   data: function data() {
     return {
       head_src: '',
@@ -222,7 +328,15 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
       level: '',
       timePlayed: '',
       platformSlug: '',
-      overview: [] };
+      overview: [],
+      armScore: [],
+      topArm: '',
+      auiLoading: {
+        show: false,
+        type: 4,
+        direction: 'col',
+        msg: '加载中',
+        mask: false } };
 
 
   },
@@ -232,7 +346,6 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
         url: _config.default.EA.find_standings_url + this.platformSlug + "/" + this.username,
         success: function success(res) {
           var data = res.data.data.segments[0].stats;
-          console.log(res.data.data);
           var num = data.headshots.value / data.kills.value * 100;
           var headshots_rate = num.toPrecision(3) + '%';
           var count = data.wins.value + data.losses.value;
@@ -240,6 +353,26 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
           var kill_rate = kill.toPrecision(3) + '%';
           var death = data.deaths.value / count;
           var death_rate = death.toPrecision(3) + '%';
+          var segments = res.data.data.segments;
+          for (var i = 0; i < segments.length; i++) {
+            if (segments[i].type == "class") {
+              if (segments[i].metadata.name == 'Assault') {
+                segments[i].metadata.name = '偷鸡兵';
+              } else if (segments[i].metadata.name == "Medic") {
+                segments[i].metadata.name = '兽医';
+              } else if (segments[i].metadata.name == "Support") {
+                segments[i].metadata.name = '支援兵';
+              } else if (segments[i].metadata.name == 'Recon') {
+                segments[i].metadata.name = '斟茶兵';
+              } else if (segments[i].metadata.name == 'Pilot') {
+                segments[i].metadata.name = '沙扣分行员';
+              } else if (segments[i].metadata.name == 'Tanker') {
+                segments[i].metadata.name = '沙扣坦克驾驶员';
+              }
+              _this.armScore.push(segments[i]);
+            }
+          }
+          _this.getTopArm();
           _this.level = data.rank.value;
           _this.timePlayed = data.timePlayed.displayValue;
           _this.overview.push({
@@ -303,7 +436,7 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
             'label': '失败场次',
             'value': data.losses.displayValue });
 
-          _this.getTopArm(data.scoreAssault.vlaue, data.scoreMedic.value, data.scoreSupport.value, data.scoreRecon.value);
+
         },
         fail: function fail() {
           console.log("请求失败");
@@ -311,26 +444,19 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
 
     },
     //通过数据得出最佳兵种
-    getTopArm: function getTopArm(scoreAssault, scoreMedic, scoreSupport, scoreRecon) {
-      var list = Array.from([scoreMedic, scoreSupport, scoreRecon]);
-      console.log(list);
-      var temp = scoreAssault;var _iterator = _createForOfIteratorHelper(
-      list.values()),_step;try {for (_iterator.s(); !(_step = _iterator.n()).done;) {var val = _step.value;
-          if (val > temp) {
-            temp = val;
-          }
-        }} catch (err) {_iterator.e(err);} finally {_iterator.f();}
-      console.log(temp);
-      if (temp == scoreAssault) {
-        console.log("突击兵为最佳兵种");
-      } else if (temp == scoreMedic) {
-        console.log("医疗兵为最佳兵种");
-      } else if (temp == scoreSupport) {
-        console.log("支援兵为最佳兵种");
-      } else {
-        console.log("狙击兵为最佳兵种");
+    getTopArm: function getTopArm() {
+      this.armScore;
+      var score = 0;
+      var temp;
+      for (var i = 0; i < this.armScore.length; i++) {
+        console.log(this.armScore[i]);
+        if (score < this.armScore[i].stats.score.value) {
+          score = this.armScore[i].stats.score.value;
+          temp = this.armScore[i];
+        }
       }
-
+      this.topArm = temp;
+      this.$refs['aui-loading'].hide();
     } },
 
   filters: {
@@ -346,6 +472,7 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
     } },
 
   onLoad: function onLoad(option) {
+    this.$refs['aui-loading'].show();
     this.head_src = option.avatarUrl;
     this.username = option.username;
     this.platformSlug = option.platformSlug;

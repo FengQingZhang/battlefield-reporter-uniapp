@@ -32,7 +32,9 @@
 			"van-icon":"wxcomponents/vant/dist/icon/index",
 			"van-grid":"wxcomponents/vant/dist/grid/index",
 			"van-grid-item":"wxcomponents/vant/dist/grid-item/index",
-			"van-divider":"wxcomponents/vant/dist/divider/index"
+			"van-divider":"wxcomponents/vant/dist/divider/index",
+			"van-skeleton":"wxcomponents/vant/dist/skeleton/index",
+			"van-loading":"wxcomponents/vant/dist/loading/index"
 		}
 	}
 }
