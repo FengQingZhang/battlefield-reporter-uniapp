@@ -96,13 +96,13 @@ var components
 try {
   components = {
     auiLoading: function() {
-      return __webpack_require__.e(/*! import() | components/aui-loading/aui-loading */ "components/aui-loading/aui-loading").then(__webpack_require__.bind(null, /*! @/components/aui-loading/aui-loading.vue */ 72))
+      return __webpack_require__.e(/*! import() | components/aui-loading/aui-loading */ "components/aui-loading/aui-loading").then(__webpack_require__.bind(null, /*! @/components/aui-loading/aui-loading.vue */ 51))
     },
     uniCollapse: function() {
-      return __webpack_require__.e(/*! import() | uni_modules/uni-collapse/components/uni-collapse/uni-collapse */ "uni_modules/uni-collapse/components/uni-collapse/uni-collapse").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue */ 80))
+      return __webpack_require__.e(/*! import() | uni_modules/uni-collapse/components/uni-collapse/uni-collapse */ "uni_modules/uni-collapse/components/uni-collapse/uni-collapse").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue */ 58))
     },
     uniCollapseItem: function() {
-      return __webpack_require__.e(/*! import() | uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item */ "uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue */ 87))
+      return __webpack_require__.e(/*! import() | uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item */ "uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue */ 65))
     }
   }
 } catch (e) {
@@ -316,7 +316,97 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var auiLoading = function auiLoading() {__webpack_require__.e(/*! require.ensure | components/aui-loading/aui-loading */ "components/aui-loading/aui-loading").then((function () {return resolve(__webpack_require__(/*! @/components/aui-loading/aui-loading.vue */ 72));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var auiLoading = function auiLoading() {__webpack_require__.e(/*! require.ensure | components/aui-loading/aui-loading */ "components/aui-loading/aui-loading").then((function () {return resolve(__webpack_require__(/*! @/components/aui-loading/aui-loading.vue */ 51));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     auiLoading: auiLoading },
@@ -331,13 +421,19 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
       overview: [],
       armScore: [],
       topArm: '',
+      //全屏的载入框
       auiLoading: {
         show: false,
         type: 4,
         direction: 'col',
         msg: '加载中',
-        mask: false } };
+        mask: false },
 
+      weapon_flag: false, //weapon页面是否查询标识，
+      vehicle_flag: false, //载具是否已经查询标识
+      rank_flag: false, //
+      topWeapon: '', //使用最多的武器
+      weapons_arr: [] };
 
   },
   methods: {
@@ -375,64 +471,50 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
           _this.getTopArm();
           _this.level = data.rank.value;
           _this.timePlayed = data.timePlayed.displayValue;
-          _this.overview.push({
-            'label': 'SPM',
-            'value': data.scorePerMinute.displayValue });
-
-          _this.overview.push({
-            'label': 'KPM',
-            'value': data.killsPerMinute.displayValue });
-
-          _this.overview.push({
-            'label': 'K/D',
-            'value': data.kdRatio.displayValue });
-
-          _this.overview.push({
-            'label': '命中率',
-            'value': data.shotsAccuracy.displayValue });
-
-          _this.overview.push({
-            'label': '胜率',
-            'value': data.wlPercentage.displayValue });
-
-          _this.overview.push({
-            'label': '击杀数',
-            'value': data.kills.displayValue });
-
-          _this.overview.push({
-            'label': '死亡数',
-            'value': data.deaths.displayValue });
-
-          _this.overview.push({
-            'label': '爆头数',
-            'value': data.headshots.displayValue });
-
-          _this.overview.push({
-            'label': '爆头率',
-            'value': headshots_rate });
-
-          _this.overview.push({
-            'label': '胜利场次',
-            'value': data.wins.displayValue });
-
-          _this.overview.push({
-            'label': '场均击杀',
-            'value': kill_rate });
-
-          _this.overview.push({
-            'label': '场均死亡',
-            'value': death_rate });
-
           var longes = parseInt(data.longestHeadshot.value);
           _this.overview.push({
+            'label': 'SPM',
+            'value': data.scorePerMinute.displayValue },
+          {
+            'label': 'KPM',
+            'value': data.killsPerMinute.displayValue },
+          {
+            'label': 'K/D',
+            'value': data.kdRatio.displayValue },
+          {
+            'label': '命中率',
+            'value': data.shotsAccuracy.displayValue },
+          {
+            'label': '胜率',
+            'value': data.wlPercentage.displayValue },
+          {
+            'label': '击杀数',
+            'value': data.kills.displayValue },
+          {
+            'label': '死亡数',
+            'value': data.deaths.displayValue },
+          {
+            'label': '爆头数',
+            'value': data.headshots.displayValue },
+          {
+            'label': '爆头率',
+            'value': headshots_rate },
+          {
+            'label': '胜利场次',
+            'value': data.wins.displayValue },
+          {
+            'label': '场均击杀',
+            'value': kill_rate },
+          {
+            'label': '场均死亡',
+            'value': death_rate },
+          {
             'label': '最远爆头',
-            'value': longes });
-
-          _this.overview.push({
+            'value': longes },
+          {
             'label': '最高连杀',
-            'value': data.killStreak.displayValue });
-
-          _this.overview.push({
+            'value': data.killStreak.displayValue },
+          {
             'label': '失败场次',
             'value': data.losses.displayValue });
 
@@ -449,7 +531,6 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
       var score = 0;
       var temp;
       for (var i = 0; i < this.armScore.length; i++) {
-        console.log(this.armScore[i]);
         if (score < this.armScore[i].stats.score.value) {
           score = this.armScore[i].stats.score.value;
           temp = this.armScore[i];
@@ -457,6 +538,49 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
       }
       this.topArm = temp;
       this.$refs['aui-loading'].hide();
+    },
+    //点击tab
+    tabs_click: function tabs_click(even) {var _this2 = this;
+      var name = even.target.name;
+      if (name == 'weapons' && !this.weapon_flag) {
+        uni.request({
+          url: _config.default.EA.weapons_vehicles_url + this.platformSlug + "/" + this.username + "/weapons",
+          success: function success(res) {
+            _this2.weapons_data_parse(res.data);
+          },
+          fail: function fail() {
+            console.log("失败");
+          } });
+
+      } else if (name == 'vehicles' && !this.vehicle_flag) {
+        uni.request({
+          url: _config.default.EA.weapons_vehicles_url + this.platformSlug + "/" + this.username + "/vehicles",
+          success: function success(res) {
+            console.log(res);
+          },
+          fail: function fail() {
+            console.log("失败");
+          } });
+
+      } else if (name == 'rank' && !this.rank_flag) {
+        uni.request({
+          url: _config.default.EA.report_url + this.platformSlug + "/latest/" + this.username,
+          success: function success(res) {
+            console.log(res);
+          },
+          fail: function fail() {
+            console.log("失败");
+          } });
+
+      }
+    },
+    //武器数据解析
+    weapons_data_parse: function weapons_data_parse(res) {
+      this.weapons_arr = res.data.children.sort(function (a, b) {
+        return b.stats[2].value - a.stats[2].value;
+      });
+      this.topWeapon = this.weapons_arr[0];
+      console.log(this.topWeapon);
     } },
 
   filters: {
