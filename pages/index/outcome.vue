@@ -3,6 +3,9 @@
 		<aui-loading ref="aui-loading" :show="auiLoading.show" :type="auiLoading.type" :direction="auiLoading.direction"
 			:msg="auiLoading.msg" :mask="auiLoading.mask">
 		</aui-loading>
+		<aui-loading ref="aui-loading2" :show="auiLoading2.show" :type="auiLoading2.type"
+			:direction="auiLoading2.direction" :msg="auiLoading2.msg" :mask="auiLoading2.mask">
+		</aui-loading>
 		<view class="top-bg"
 			style="background: url(https://trackercdn.com/cdn/tracker.gg/bfv/bfv-profile-hero1.jpg);background-size:cover;background-position: 50%;">
 			<view class="mask">
@@ -150,81 +153,95 @@
 			</van-tab>
 			<!-- 枪械 -->
 			<van-tab title="枪械" name="weapons">
-				<view class="best-weapon-div"
-					style="background: url(https://trackercdn.com/cdn/tracker.gg/bfv/weapon-bg.jpg);background-size:cover;background-position: 50%;">
-					<view class="mask">
-						<view style="width: 100%;display: flex;flex-direction:row;">
-							<view style="width: 10%;">
-								<icon class="iconfont icon-jinpai" style="font-size: 10vw;color: #F0E68C;"></icon>
+				<view v-show="weapons_show">
+					<view class="best-weapon-div"
+						style="background: url(https://trackercdn.com/cdn/tracker.gg/bfv/weapon-bg.jpg);background-size:cover;background-position: 50%;">
+						<view class="mask">
+							<view style="width: 100%;display: flex;flex-direction:row;">
+								<view style="width: 10%;">
+									<icon class="iconfont icon-jinpai" style="font-size: 10vw;color: #F0E68C;"></icon>
+								</view>
+								<view style="width: 85%;color: #efefef;font-size: large;padding-top: 2%;">
+									使用最多
+								</view>
 							</view>
-							<view style="width: 85%;color: #efefef;font-size: large;padding-top: 2%;">
-								使用最多
-							</view>
-						</view>
-						<view style="width: 100%;display: flex;flex-direction: row;">
-							<view style="width: 20%;text-align: center;">
-								<van-image width="5rem" height="4rem" fit="contain"
-									:src="topWeapon.metadata.imageUrl" />
-								<van-row>
-									<view style="color:#efefef;margin-bottom:1rpx">
-										<span v-text="topWeapon.metadata.name"></span>
-									</view>
-								</van-row>
-							</view>
-							<view style="width: 79%;">
-								<van-row gutter="5" style="color:#78b5e2;">
-									<van-col span="6">
-										击杀数
-									</van-col>
-									<van-col span="6">
-										KPM
-									</van-col>
-									<van-col span="6">
-										时间
-									</van-col>
-									<van-col span="6">
-										射击
-									</van-col>
-								</van-row>
-								<van-row gutter="5" style="color: #FFFFFF;">
-									<van-col span="6">
-										{{topWeapon.stats[0].displayValue}}
-									</van-col>
-									<van-col span="6">
-										{{topWeapon.stats[1].displayValue}}
-									</van-col>
-									<van-col span="6">
-										{{topWeapon.stats[2].displayValue}}
-									</van-col>
-									<van-col span="6">
-										{{topWeapon.stats[3].displayValue}}
-									</van-col>
-								</van-row>
-								<van-row gutter="5" style="color:#78b5e2;">
-									<van-col span="6">
-										命中
-									</van-col>
-									<van-col span="6">
-										命中率
-									</van-col>
-									<van-col span="6">
-										爆头
-									</van-col>
-								</van-row>
-								<van-row gutter="5" style="color: #FFFFFF;">
-									<van-col span="6">
-										{{topWeapon.stats[4].displayValue}}
-									</van-col>
-									<van-col span="6">
-										{{topWeapon.stats[5].displayValue}}
-									</van-col>
-									<van-col span="6">
-										{{topWeapon.stats[6].displayValue}}
-									</van-col>
-								</van-row>
+							<view style="width: 100%;display: flex;flex-direction: row;">
+								<view style="width: 21%;text-align: center;">
+									<van-image width="5rem" height="3rem" fit="contain"
+										:src="topWeapon.metadata.imageUrl" />
+									<van-row>
+										<view style="color:#efefef;margin-bottom:1rpx">
+											<span v-text="topWeapon.metadata.name"></span>
+										</view>
+									</van-row>
+								</view>
+								<view style="width: 79%;">
+									<van-row gutter="5" style="color:#78b5e2;">
+										<van-col span="6">
+											击杀数
+										</van-col>
+										<van-col span="6">
+											KPM
+										</van-col>
+										<van-col span="6">
+											时间
+										</van-col>
+										<van-col span="6">
+											射击
+										</van-col>
+									</van-row>
+									<van-row gutter="5" style="color: #FFFFFF;">
+										<van-col span="6">
+											<span v-text="topWeapon.stats[0].displayValue"></span>
+										</van-col>
+										<van-col span="6">
+											<span v-text="topWeapon.stats[1].displayValue"></span>
+										</van-col>
+										<van-col span="6">
+											<span v-text="topWeapon.stats[2].displayValue"></span>
+										</van-col>
+										<van-col span="6">
+											<span v-text="topWeapon.stats[3].displayValue"></span>
+										</van-col>
+									</van-row>
+									<van-row gutter="5" style="color:#78b5e2;">
+										<van-col span="6">
+											命中
+										</van-col>
+										<van-col span="6">
+											命中率
+										</van-col>
+										<van-col span="6">
+											爆头
+										</van-col>
+									</van-row>
+									<van-row gutter="5" style="color: #FFFFFF;">
+										<van-col span="6">
+											<span v-text="topWeapon.stats[4].displayValue"></span>
+										</van-col>
+										<van-col span="6">
+											<span v-text="topWeapon.stats[5].displayValue"></span>
+										</van-col>
+										<van-col span="6">
+											<span v-text="topWeapon.stats[5].displayValue"></span>
+										</van-col>
+									</van-row>
+								</view>
 							</view>
 						</view>
 					</view>
+				</view>
+				<view style="background-color: #1b2640;color: #FFFFFF;" v-show="weapons_show">
+					<view v-for="(item,index) in weapons_arr" :key='index' style=" display:flex; flex-direction: row;">
+						<view>
+							<van-image width="5rem" height="3rem" fit="contain"
+								:src="item.metadata.imageUrl" />
+						</view>
+						<view>
+							<span v-text="item.metadata.name"></span>
+						</view>
+					</view>
+
 				</view>
 			</van-tab>
 			<van-tab title="载具" name="vehicles">内容 3</van-tab>
@@ -258,11 +275,21 @@
 					msg: '加载中',
 					mask: false,
 				},
+				auiLoading2: {
+					show: false,
+					type: 3,
+					direction: 'col',
+					msg: '加载中',
+					mask: true,
+				},
 				weapon_flag: false, //weapon页面是否查询标识，
 				vehicle_flag: false, //载具是否已经查询标识
 				rank_flag: false, //
 				topWeapon: '', //使用最多的武器
 				weapons_arr: [],
+				weapons_show: false,
+				vehicles_show: false,
+				rank_show: false,
 			}
 		},
 		methods: {
@@ -270,6 +297,7 @@
 				uni.request({
 					url: url.EA.find_standings_url + this.platformSlug + "/" + this.username,
 					success: (res) => {
+						console.log(res);
 						let data = res.data.data.segments[0].stats;
 						let num = (data.headshots.value / data.kills.value) * 100;
 						let headshots_rate = num.toPrecision(3) + '%';
@@ -347,7 +375,6 @@
 							'label': '失败场次',
 							'value': data.losses.displayValue
 						});
-
 					},
 					fail: () => {
 						console.log("请求失败");
@@ -372,6 +399,9 @@
 			tabs_click(even) {
 				let name = even.target.name
 				if (name == 'weapons' && !this.weapon_flag) {
+					if (!this.weapons_show) {
+						this.$refs['aui-loading2'].show();
+					}
 					uni.request({
 						url: url.EA.weapons_vehicles_url + this.platformSlug + "/" + this.username + "/weapons",
 						success: (res) => {
@@ -382,6 +412,9 @@
 						}
 					});
 				} else if (name == 'vehicles' && !this.vehicle_flag) {
+					if (!this.vehicles_show) {
+						this.$refs['aui-loading2'].show();
+					}
 					uni.request({
 						url: url.EA.weapons_vehicles_url + this.platformSlug + "/" + this.username + "/vehicles",
 						success: (res) => {
@@ -392,6 +425,9 @@
 						}
 					});
 				} else if (name == 'rank' && !this.rank_flag) {
+					if (!this.rank_show) {
+						this.$refs['aui-loading2'].show();
+					}
 					uni.request({
 						url: url.EA.report_url + this.platformSlug + "/latest/" + this.username,
 						success: (res) => {
@@ -409,8 +445,24 @@
 					return b.stats[2].value - a.stats[2].value;
 				});
 				this.topWeapon = this.weapons_arr[0];
-				console.log(this.topWeapon);
-			}
+				let that = this;
+				setTimeout(function() {
+					that.$refs['aui-loading2'].hide();
+					that.weapons_show = true;
+				}, 600)
+			},
+			//异步更新数据
+			// onLoad(){
+			// 	if(this.weapons_arr.length==0){
+			// 		this.loading=false;
+			// 		this.finished=true;
+			// 	}else{
+			// 		for(let i=0;i<this.weapons_arr.length;i++){
+			// 			this.weapons_list.push(this.weapons_arr[i]);
+			// 			this.weapons_arr[i].delete();
+			// 		}
+			// 	}
+			// }
 		},
 		filters: {
 			timePlayed_filter(val) {

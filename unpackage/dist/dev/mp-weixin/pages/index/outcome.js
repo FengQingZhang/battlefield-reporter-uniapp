@@ -406,6 +406,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var auiLoading = function auiLoading() {__webpack_require__.e(/*! require.ensure | components/aui-loading/aui-loading */ "components/aui-loading/aui-loading").then((function () {return resolve(__webpack_require__(/*! @/components/aui-loading/aui-loading.vue */ 51));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
@@ -429,11 +446,21 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
         msg: '加载中',
         mask: false },
 
+      auiLoading2: {
+        show: false,
+        type: 3,
+        direction: 'col',
+        msg: '加载中',
+        mask: true },
+
       weapon_flag: false, //weapon页面是否查询标识，
       vehicle_flag: false, //载具是否已经查询标识
       rank_flag: false, //
       topWeapon: '', //使用最多的武器
-      weapons_arr: [] };
+      weapons_arr: [],
+      weapons_show: false,
+      vehicles_show: false,
+      rank_show: false };
 
   },
   methods: {
@@ -441,6 +468,7 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
       uni.request({
         url: _config.default.EA.find_standings_url + this.platformSlug + "/" + this.username,
         success: function success(res) {
+          console.log(res);
           var data = res.data.data.segments[0].stats;
           var num = data.headshots.value / data.kills.value * 100;
           var headshots_rate = num.toPrecision(3) + '%';
@@ -518,7 +546,6 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
             'label': '失败场次',
             'value': data.losses.displayValue });
 
-
         },
         fail: function fail() {
           console.log("请求失败");
@@ -543,6 +570,9 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
     tabs_click: function tabs_click(even) {var _this2 = this;
       var name = even.target.name;
       if (name == 'weapons' && !this.weapon_flag) {
+        if (!this.weapons_show) {
+          this.$refs['aui-loading2'].show();
+        }
         uni.request({
           url: _config.default.EA.weapons_vehicles_url + this.platformSlug + "/" + this.username + "/weapons",
           success: function success(res) {
@@ -553,6 +583,9 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
           } });
 
       } else if (name == 'vehicles' && !this.vehicle_flag) {
+        if (!this.vehicles_show) {
+          this.$refs['aui-loading2'].show();
+        }
         uni.request({
           url: _config.default.EA.weapons_vehicles_url + this.platformSlug + "/" + this.username + "/vehicles",
           success: function success(res) {
@@ -563,6 +596,9 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
           } });
 
       } else if (name == 'rank' && !this.rank_flag) {
+        if (!this.rank_show) {
+          this.$refs['aui-loading2'].show();
+        }
         uni.request({
           url: _config.default.EA.report_url + this.platformSlug + "/latest/" + this.username,
           success: function success(res) {
@@ -580,9 +616,25 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
         return b.stats[2].value - a.stats[2].value;
       });
       this.topWeapon = this.weapons_arr[0];
-      console.log(this.topWeapon);
-    } },
-
+      var that = this;
+      setTimeout(function () {
+        that.$refs['aui-loading2'].hide();
+        that.weapons_show = true;
+      }, 600);
+    }
+    //异步更新数据
+    // onLoad(){
+    // 	if(this.weapons_arr.length==0){
+    // 		this.loading=false;
+    // 		this.finished=true;
+    // 	}else{
+    // 		for(let i=0;i<this.weapons_arr.length;i++){
+    // 			this.weapons_list.push(this.weapons_arr[i]);
+    // 			this.weapons_arr[i].delete();
+    // 		}
+    // 	}
+    // }
+  },
   filters: {
     timePlayed_filter: function timePlayed_filter(val) {
       var temp = val;
