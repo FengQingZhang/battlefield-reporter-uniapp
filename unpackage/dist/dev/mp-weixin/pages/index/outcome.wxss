@@ -125,7 +125,7 @@
 	        flex-direction: row;
 	padding-left: 5%;
 }
-.best-weapon-div {
+.best-div {
 	width: 100%;
 	height: 10%;
 	display: -webkit-box;
@@ -135,5 +135,19 @@
 	-webkit-box-direction: normal;
 	-webkit-flex-direction: column;
 	        flex-direction: column;
+}
+.rank-div{
+	width: 100%;
+	height: 25%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	background-size:cover;
+	background-position: 50%;
+	border-bottom: 2rpx solid #F0E68C;border-top: 2rpx solid #F0E68C;
 }
 

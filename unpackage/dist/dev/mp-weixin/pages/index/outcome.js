@@ -128,11 +128,25 @@ var render = function() {
   var _c = _vm._self._c || _h
   var f0 = _vm._f("timePlayed_filter")(_vm.timePlayed)
 
+  var l0 = _vm.__map(_vm.weapons_arr, function(item, index) {
+    var $orig = _vm.__get_orig(item)
+
+    var f1 = _vm._f("headshort_per_filter")(
+      item.stats[6].value / item.stats[0].value
+    )
+
+    return {
+      $orig: $orig,
+      f1: f1
+    }
+  })
+
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        f0: f0
+        f0: f0,
+        l0: l0
       }
     }
   )
@@ -423,6 +437,178 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var auiLoading = function auiLoading() {__webpack_require__.e(/*! require.ensure | components/aui-loading/aui-loading */ "components/aui-loading/aui-loading").then((function () {return resolve(__webpack_require__(/*! @/components/aui-loading/aui-loading.vue */ 51));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
@@ -457,18 +643,22 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
       vehicle_flag: false, //载具是否已经查询标识
       rank_flag: false, //
       topWeapon: '', //使用最多的武器
+      topWeapon_info_arr: [], //最多武器的信息
       weapons_arr: [],
+      topVehicle: '',
+      vehicles_arr: [],
       weapons_show: false,
       vehicles_show: false,
+      rank_arr: [],
       rank_show: false };
 
   },
   methods: {
+    //获取总览信息
     getInfoByName: function getInfoByName() {var _this = this;
       uni.request({
         url: _config.default.EA.find_standings_url + this.platformSlug + "/" + this.username,
         success: function success(res) {
-          console.log(res);
           var data = res.data.data.segments[0].stats;
           var num = data.headshots.value / data.kills.value * 100;
           var headshots_rate = num.toPrecision(3) + '%';
@@ -566,7 +756,7 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
       this.topArm = temp;
       this.$refs['aui-loading'].hide();
     },
-    //点击tab
+    //tab的点击事件
     tabs_click: function tabs_click(even) {var _this2 = this;
       var name = even.target.name;
       if (name == 'weapons' && !this.weapon_flag) {
@@ -577,6 +767,7 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
           url: _config.default.EA.weapons_vehicles_url + this.platformSlug + "/" + this.username + "/weapons",
           success: function success(res) {
             _this2.weapons_data_parse(res.data);
+            _this2.weapon_flag = true;
           },
           fail: function fail() {
             console.log("失败");
@@ -589,7 +780,8 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
         uni.request({
           url: _config.default.EA.weapons_vehicles_url + this.platformSlug + "/" + this.username + "/vehicles",
           success: function success(res) {
-            console.log(res);
+            _this2.vehicles_data_parse(res.data);
+            _this2.vehicle_flag = true;
           },
           fail: function fail() {
             console.log("失败");
@@ -602,7 +794,8 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
         uni.request({
           url: _config.default.EA.report_url + this.platformSlug + "/latest/" + this.username,
           success: function success(res) {
-            console.log(res);
+            _this2.report_data_parse(res);
+            _this2.rank_flag = true;
           },
           fail: function fail() {
             console.log("失败");
@@ -615,11 +808,40 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
       this.weapons_arr = res.data.children.sort(function (a, b) {
         return b.stats[2].value - a.stats[2].value;
       });
-      this.topWeapon = this.weapons_arr[0];
+      this.topWeapon = this.weapons_arr[0].metadata;
+      this.topWeapon_info_arr = this.weapons_arr[0].stats;
+      var headshort_pre = this.topWeapon_info_arr[6].value / this.topWeapon_info_arr[0].value * 100;
+      headshort_pre = headshort_pre.toPrecision(3) + "%";
+      this.topWeapon_info_arr.push({
+        Value: headshort_pre });
+
       var that = this;
       setTimeout(function () {
         that.$refs['aui-loading2'].hide();
         that.weapons_show = true;
+      }, 650);
+    },
+    //载具数据解析
+    vehicles_data_parse: function vehicles_data_parse(res) {
+      this.vehicles_arr = res.data.children.sort(function (a, b) {
+        return b.stats[2].value - a.stats[2].value;
+      });
+      this.topVehicle = this.vehicles_arr[0];
+      var that = this;
+      setTimeout(function () {
+        that.$refs['aui-loading2'].hide();
+        that.vehicles_show = true;
+      }, 600);
+    },
+    //战绩数据解析
+    report_data_parse: function report_data_parse(res) {
+      console.log(res.data);
+      this.rank_arr = res.data.data.reports;
+      console.log(this.rank_arr);
+      var that = this;
+      setTimeout(function () {
+        that.$refs['aui-loading2'].hide();
+        that.rank_show = true;
       }, 600);
     }
     //异步更新数据
@@ -645,6 +867,10 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
         temp = val.replace("m", "分钟");
       }
       return temp;
+    },
+    headshort_per_filter: function headshort_per_filter(val) {
+      val = val * 100;
+      return val.toPrecision(3) + '%';
     } },
 
   onLoad: function onLoad(option) {
