@@ -16,6 +16,7 @@
 				</slot>
 			</view>
 		</view>
+		<text @click="confirm" class="uni-searchbar__cancel" style="color: #FFFFFF;">搜索</text>
 		<text @click="cancel" class="uni-searchbar__cancel" v-if="cancelButton ==='always' || show && cancelButton ==='auto'">{{cancelText}}</text>
 	</view>
 </template>
@@ -173,7 +174,7 @@
 			},
 			emitFocus(e) {
 				this.$emit("focus", e.detail)
-			}
+			},
 		}
 	};
 </script>

@@ -103,13 +103,13 @@ var components
 try {
   components = {
     uniPopup: function() {
-      return __webpack_require__.e(/*! import() | uni_modules/uni-popup/components/uni-popup/uni-popup */ "uni_modules/uni-popup/components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-popup/components/uni-popup/uni-popup.vue */ 29))
+      return __webpack_require__.e(/*! import() | uni_modules/uni-popup/components/uni-popup/uni-popup */ "uni_modules/uni-popup/components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-popup/components/uni-popup/uni-popup.vue */ 37))
     },
     uniPopupMessage: function() {
-      return Promise.all(/*! import() | uni_modules/uni-popup/components/uni-popup-message/uni-popup-message */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-popup/components/uni-popup-message/uni-popup-message")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-popup/components/uni-popup-message/uni-popup-message.vue */ 36))
+      return Promise.all(/*! import() | uni_modules/uni-popup/components/uni-popup-message/uni-popup-message */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-popup/components/uni-popup-message/uni-popup-message")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-popup/components/uni-popup-message/uni-popup-message.vue */ 44))
     },
     uniSearchBar: function() {
-      return __webpack_require__.e(/*! import() | uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar */ "uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue */ 44))
+      return __webpack_require__.e(/*! import() | uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar */ "uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.vue */ 52))
     }
   }
 } catch (e) {
@@ -165,6 +165,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -392,14 +401,30 @@ var _config = _interopRequireDefault(__webpack_require__(/*! ../../common/config
 //
 //
 //
-var _default = { data: function data() {return { title: 'Hello', search_content: '', platform: "origin", placheholder: "请输入origin用户名", hint: ["请输入origin用户名", "请输入xbox用户名", "请输入PS用户名"], platforms: ["origin", "xbl", "psn"], message: '', show: false, tab_show: false, search_history: [] };}, onLoad: function onLoad() {}, methods: { search: function search() {var _this = this;if (this.search_content == '') {this.message = '用户名不能为空';this.$refs['popup'].open();return false;}var that = this;uni.request({ url: _config.default.EA.find_user_url + "platform=" + this.platform + "&query=" + this.search_content, success: function success(res) {//console.log(res.data);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { title: 'Hello', search_content: '', platform: "origin", placheholder: "请输入origin用户名", hint: ["请输入origin用户名", "请输入xbox用户名", "请输入PS用户名"], platforms: ["origin", "xbl", "psn"], message: '', show: false, tab_show: false, search_history: [], favorite: [] };}, onLoad: function onLoad() {}, methods: { search: function search() {var _this = this;if (this.search_content == '') {this.message = '用户名不能为空';this.$refs['popup'].open();return false;}var that = this;uni.request({ url: _config.default.EA.find_user_url + "platform=" + this.platform + "&query=" + this.search_content, success: function success(res) {//console.log(res.data);
           var temp = res.data;if (temp.data.length == 0) {_dialog.default.alert({ context: _this, title: '查询失败', message: '您查询的用户名不存在' }).then(function () {// close
             });return false;}var name = temp.data[0].platformUserHandle;var platformSlug = temp.data[0].platformSlug;var avatarUrl = temp.data[0].avatarUrl;if (_this.search_history.indexOf(name) == -1) {_this.search_history.push(name);var data = _this.search_history;uni.setStorage({ key: "search_history", data: data });}uni.navigateTo({ url: 'outcome?username=' + name + '&avatarUrl=' + avatarUrl + '&platformSlug=' + platformSlug });}, fail: function fail() {console.log("请求失败");} });}, changeTab: function changeTab(index) {this.platform = this.platforms[index];this.placheholder = this.hint[index];this.closeHistory();}, showHistory: function showHistory() {var _this2 = this;if (this.search_history.length > 0) {this.show = true;this.$nextTick(function () {_this2.$refs['vantabs'].resize();});}}, closeHistory: function closeHistory() {//console.log(currentCli)
       /* if(currentCli){
       	if(!currentCli.contains(event.target)){
       		this.show = false;
       	}
-      } */this.show = false;}, del: function del(name) {var index = this.search_history.indexOf(name);this.search_history.splice(index, 1);}, chooseHistory: function chooseHistory(name) {this.search_content = name;this.closeHistory();} }, created: function created() {var _this3 = this;uni.getStorage({ key: 'search_history', success: function success(res) {_this3.search_history = res.data;}, fail: function fail() {/* 没取到的操作 */} });} };exports.default = _default;
+      } */this.show = false;}, del: function del(name) {var index = this.search_history.indexOf(name);this.search_history.splice(index, 1);}, chooseHistory: function chooseHistory(name) {this.search_content = name;this.closeHistory();}, getHistory: function getHistory() {var _this3 = this;uni.getStorage({ key: 'search_history', success: function success(res) {_this3.search_history = res.data;}, fail: function fail() {/* 没取到的操作 */} });}, getFavorite: function getFavorite() {var _this4 = this;uni.getStorage({ key: 'favorite', success: function success(res) {_this4.favorite = res.data;}, fail: function fail() {/* 没取到的操作 */} });} }, created: function created() {this.getHistory();this.getFavorite();}, onShow: function onShow() {
+    var param = uni.getStorageSync("goBackIndex");
+    console.log(param);
+    if (param == 1) {
+      uni.setStorageSync("goBackIndex", '');
+      this.getFavorite();
+    }
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

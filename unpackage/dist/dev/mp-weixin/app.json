@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/index/outcome"
+    "pages/index/outcome",
+    "dower_pages/plane"
   ],
   "subPackages": [],
   "window": {
@@ -23,7 +24,10 @@
     "van-grid-item": "wxcomponents/vant/dist/grid-item/index",
     "van-divider": "wxcomponents/vant/dist/divider/index",
     "van-skeleton": "wxcomponents/vant/dist/skeleton/index",
-    "van-loading": "wxcomponents/vant/dist/loading/index"
-  },
-  "sitemapLocation": "sitemap.json"
+    "van-loading": "wxcomponents/vant/dist/loading/index",
+    "van-notify": "wxcomponents/vant/dist/notify/index",
+    "van-button": "wxcomponents/vant/dist/button/index",
+    "van-checkbox": "wxcomponents/vant/dist/checkbox/index",
+    "van-checkbox-group": "wxcomponents/vant/dist/checkbox-group/index"
+  }
 }

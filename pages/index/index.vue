@@ -33,7 +33,16 @@
 						<view v-show="show" class="search-history">
 							<!-- <uni-icons type="close" size="25" style="float: right;" @click="closeHistory"> -->
 							<van-tabs ref="vantabs" active="a" swipeable color='#f0674e'>
-								<van-tab title="我的关注" name="a">内容 1</van-tab>
+								<van-tab title="我的关注" name="a">
+									<ul style="padding: 10rpx;">
+										<li v-for="(item,index) in favorite" :key='index'
+											style="display: inline; margin-left: 10rpx;">
+											<van-tag closeable size="large" type='primary' @close.stop='del(item)'>
+												<a @click.stop='chooseHistory(item)'> {{item}}</a>
+											</van-tag>
+										</li>
+									</ul>
+								</van-tab>
 								<van-tab title="搜索历史" name="b">
 									<ul style="padding: 10rpx;">
 										<li v-for="(item,index) in search_history" :key='index'
@@ -65,7 +74,7 @@
 						/>
 					</view>
 					<view class="strategy-row-text-div"
-						style="background:url(/static/index/m1.jpg);background-size: 100% 100%;border-radius: 0 0 5px 5px;">
+						style="background:url(http://qxcjfm2yn.hb-bkt.clouddn.com/m1.jpg);background-size: 100% 100%;border-radius: 0 0 5px 5px;">
 						<view class="strategy-row-text-mask">
 							<view class="typeface strategy-row-text">枪械加点</view>
 						</view>
@@ -81,7 +90,7 @@
 						/>
 					</view>
 					<view class="strategy-row-text-div"
-						style="background:url(/static/index/dogtank.jpeg);background-size: 100% 100%;border-radius: 0 0 5px 5px;">
+						style="background:url(http://qxcjfm2yn.hb-bkt.clouddn.com/dogtank.jpeg);background-size: 100% 100%;border-radius: 0 0 5px 5px;">
 						<view class="strategy-row-text-mask">
 							<view class="typeface strategy-row-text">坦克加点</view>
 						</view>
@@ -97,7 +106,7 @@
 						/>
 					</view>
 					<view class="strategy-row-text-div"
-						style="background: url(/static/index/f4u.jpg);background-size: 100% 100%;border-radius: 0 0 5px 5px;">
+						style="background: url(http://qxcjfm2yn.hb-bkt.clouddn.com/f4u.jpg);background-size: 100% 100%;border-radius: 0 0 5px 5px;">
 						<view class="strategy-row-text-mask">
 							<view class="typeface strategy-row-text">飞机加点</view>
 						</view>
@@ -134,7 +143,8 @@
 				message: '',
 				show: false,
 				tab_show:false,
-				search_history: []
+				search_history: [],
+				favorite:[]
 			}
 		},
 		onLoad() {
@@ -213,18 +223,41 @@
 			chooseHistory(name) {
 				this.search_content = name;
 				this.closeHistory();
+			},
+			getHistory(){
+				uni.getStorage({
+					key: 'search_history',
+					success: (res) => {
+						this.search_history = res.data;
+					},
+					fail: () => {
+						/* 没取到的操作 */
+					}
+				})
+			},
+			getFavorite(){
+				uni.getStorage({
+					key:'favorite',
+					success:(res)=>{
+						this.favorite = res.data;
+					},
+					fail: () => {
+						/* 没取到的操作 */
+					}
+				})
 			}
 		},
 		created() {
-			uni.getStorage({
-				key: 'search_history',
-				success: (res) => {
-					this.search_history = res.data;
-				},
-				fail: () => {
-					/* 没取到的操作 */
-				}
-			})
+			this.getHistory();
+			this.getFavorite();
+		},
+		onShow() {
+			let param = uni.getStorageSync("goBackIndex");
+			console.log(param);
+			if(param==1){
+				uni.setStorageSync("goBackIndex",'');
+				this.getFavorite();
+			}
 		}
 	}
 </script>

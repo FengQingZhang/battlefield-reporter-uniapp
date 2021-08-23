@@ -1,5 +1,6 @@
 <template>
 	<view class="content">
+		<van-notify id="van-notify" />
 		<aui-loading ref="aui-loading" :show="auiLoading.show" :type="auiLoading.type" :direction="auiLoading.direction"
 			:msg="auiLoading.msg" :mask="auiLoading.mask">
 		</aui-loading>
@@ -27,13 +28,20 @@
 							<view>
 								<van-tag mark type="success">等级:{{level}}</van-tag>
 							</view>
+							<view style="margin-left: 20rpx;">
+								<van-checkbox :value="checked" shape="square" @change="onChange" label-class="concernClass">
+								</van-checkbox>
+							</view>
+							<view style="color:#FFFFFF;" @click="onChange">
+								关注
+							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<van-tabs ref="vantabs" active="overview" nav-class="my_nav" title-inactive-color="#FFFFFF"
-			title-active-color="#FFFFFF" @click="tabs_click">
+			title-active-color="#FFFFFF" tab-class="my_tab_active" @click="tabs_click">
 			<!-- 总览 -->
 			<van-tab title="总览" name="overview">
 				<view class="timeplayed-div">
@@ -45,7 +53,7 @@
 						<view style="color: #78b5e2;">{{timePlayed|timePlayed_filter}}</view>
 					</view>
 				</view>
-				<van-grid square column-num="5">
+				<van-grid square column-num="4" custom-class="grid-bg">
 					<van-grid-item :key='index' use-slot v-for="(item,index) in overview">
 						<ul>
 							<li style="color: #78b5e2;">{{item.label}}</li>
@@ -167,14 +175,12 @@
 							</view>
 							<view style="width: 99%;display: flex;flex-direction: row;">
 								<view style="width: 21%;text-align: center;">
-									<van-image width="5rem" height="3rem" fit="contain" :src="topWeapon.imageUrl" />
-									<van-row>
-										<view style="color:#efefef;margin-bottom:1rpx">
-											<span v-text="topWeapon.name"></span>
-										</view>
-									</van-row>
+									<van-image width="4rem" height="5rem" fit="contain" :src="topWeapon.imageUrl" />
 								</view>
 								<view style="width: 75%;">
+									<van-row style="color:#efefef;">
+										<span v-text="topWeapon.name"></span>
+									</van-row>
 									<van-row gutter="5" style="color:#78b5e2;font-size: x-small;">
 										<van-col span="6">
 											击杀数
@@ -236,79 +242,82 @@
 						</view>
 					</view>
 				</view>
-				<view style="background-color: #1b2640;color: #FFFFFF;" v-show="weapons_show">
-					<view v-for="(item,index) in weapons_arr" :key='index' style=" display:flex; flex-direction: row;">
-						<view style="width: 20%;text-align: center;border-bottom: 1px solid #78b5e2;">
-							<van-image width="5rem" height="5rem" fit="contain" :src="item.metadata.imageUrl" />
-						</view>
-						<view style="display: flex;flex-direction:column;width: 80%;border-bottom: 1px solid #78b5e2 ;">
-							<view>
-								<span v-text="item.metadata.name"></span>
+				<view style="background-color: #1b2640;color: #FFFFFF;" v-show="weapons_show" :style="{height:screen_height*0.65+'px'}">
+					<z-paging ref="paging" v-model="weapons_list" loading-more-no-more-text="我也是有底线的！" @query="queryList" :fixed="false">
+						<view v-for="(item,index) in weapons_list" :key='index' style=" display:flex; flex-direction: row;">
+							<view style="width: 20%;text-align: center;border-bottom: 1px solid #78b5e2;">
+								<van-image width="4rem" height="5rem" fit="contain"  lazy-load :src="item.metadata.imageUrl" />
 							</view>
-							<view>
-								<van-row style="color:#78b5e2;font-size:small;">
-									<van-col span="6">
-										击杀数
-									</van-col>
-									<van-col span="6">
-										KPM
-									</van-col>
-									<van-col span="6">
-										时间
-									</van-col>
-									<van-col span="6">
-										射击
-									</van-col>
-								</van-row>
-								<van-row style="color:#FFFFFF;font-size:x-small;">
-									<van-col span="6">
-										<span v-text="item.stats[0].displayValue"></span>
-									</van-col>
-									<van-col span="6">
-										<span v-text="item.stats[1].displayValue"></span>
-									</van-col>
-									<van-col span="6">
-										<span v-text="item.stats[2].displayValue"></span>
-									</van-col>
-									<van-col span="6">
-										<span v-text="item.stats[3].displayValue"></span>
-									</van-col>
-								</van-row>
-								<van-row style="color:#78b5e2;font-size:small;">
-									<van-col span="6">
-										命中
-									</van-col>
-									<van-col span="6">
-										命中率
-									</van-col>
-									<van-col span="6">
-										爆头
-									</van-col>
-									<val-col span="6">
-										爆头率
-									</val-col>
-								</van-row>
-								<van-row style="color:#FFFFFF;font-size: x-small;">
-									<van-col span="6">
-										<span v-text="item.stats[4].displayValue"></span>
-									</van-col>
-									<van-col span="6">
-										<span v-text="item.stats[5].displayValue"></span>%
-									</van-col>
-									<van-col span="6">
-										<span v-text="item.stats[6].displayValue"></span>
-									</van-col>
-									<van-col span="6">
-										{{item.stats[6].value/item.stats[0].value|headshort_per_filter}}
-									</van-col>
-								</van-row>
+							<view style="display: flex;flex-direction:column;width: 80%;border-bottom: 1px solid #78b5e2 ;">
+								<view>
+									<span v-text="item.metadata.name"></span>
+								</view>
+								<view>
+									<van-row style="color:#78b5e2;font-size:small;">
+										<van-col span="6">
+											击杀数
+										</van-col>
+										<van-col span="6">
+											KPM
+										</van-col>
+										<van-col span="6">
+											时间
+										</van-col>
+										<van-col span="6">
+											射击
+										</van-col>
+									</van-row>
+									<van-row style="color:#FFFFFF;font-size:x-small;">
+										<van-col span="6">
+											<span v-text="item.stats[0].displayValue"></span>
+										</van-col>
+										<van-col span="6">
+											<span v-text="item.stats[1].displayValue"></span>
+										</van-col>
+										<van-col span="6">
+											<span v-text="item.stats[2].displayValue"></span>
+										</van-col>
+										<van-col span="6">
+											<span v-text="item.stats[3].displayValue"></span>
+										</van-col>
+									</van-row>
+									<van-row style="color:#78b5e2;font-size:small;">
+										<van-col span="6">
+											命中
+										</van-col>
+										<van-col span="6">
+											命中率
+										</van-col>
+										<van-col span="6">
+											爆头
+										</van-col>
+										<val-col span="6">
+											爆头率
+										</val-col>
+									</van-row>
+									<van-row style="color:#FFFFFF;font-size: x-small;">
+										<van-col span="6">
+											<span v-text="item.stats[4].displayValue"></span>
+										</van-col>
+										<van-col span="6">
+											<span v-text="item.stats[5].displayValue"></span>%
+										</van-col>
+										<van-col span="6">
+											<span v-text="item.stats[6].displayValue"></span>
+										</van-col>
+										<van-col span="6">
+											{{item.stats[6].value/item.stats[0].value|headshort_per_filter}}
+										</van-col>
+									</van-row>
+								</view>
 							</view>
 						</view>
-					</view>
-					<view
+					</z-paging>
+				
+					<!-- <view
 						style="background-color: #1b2640;color:hsla(0,0%,100%,.5);width: 100%;height:5%;text-align: center;">
 						没有更多了
-					</view>
+					</view> -->
 				</view>
 			</van-tab>
 			<van-tab title="载具" name="vehicles">
@@ -326,15 +335,15 @@
 							</view>
 							<view style="width: 99%;display: flex;flex-direction: row;">
 								<view style="width: 21%;text-align: center;">
-									<van-image width="5rem" height="3rem" fit="contain"
+									<van-image width="4rem" height="5rem" fit="contain"
 										:src="topVehicle.metadata.imageUrl" />
+								</view>
+								<view style="width: 75%;">
 									<van-row>
 										<view style="color:#efefef;margin-bottom:1rpx">
 											<span v-text="topVehicle.metadata.name"></span>
 										</view>
 									</van-row>
-								</view>
-								<view style="width: 75%;">
 									<van-row gutter="5" style="color:#78b5e2;font-size:large;">
 										<van-col span="8">
 											击杀数
@@ -362,10 +371,10 @@
 						</view>
 					</view>
 				</view>
-				<view style="background-color: #1b2640;color: #FFFFFF;" v-show="vehicles_show">
+				<view style="background-color: #1b2640;color: #FFFFFF;padding: 10rpx;" v-show="vehicles_show">
 					<view v-for="(item,index) in vehicles_arr" :key='index' style=" display:flex; flex-direction: row;">
 						<view style="width: 20%;text-align: center;border-bottom: 1px solid #78b5e2;">
-							<van-image width="5rem" height="5rem" fit="contain" :src="item.metadata.imageUrl" />
+							<van-image width="4rem" height="5rem" lazy-load fit="contain" :src="item.metadata.imageUrl" />
 						</view>
 						<view style="display: flex;flex-direction:column;width: 80%;border-bottom: 1px solid #78b5e2 ;">
 							<view>
@@ -405,16 +414,33 @@
 	</van-tab>
 	<van-tab title="对局" name="rank">
 		<view style="background-color: #1b2640;color: #FFFFFF;" v-show="rank_show">
-			<view v-for="(item,index) in rank_arr" :key="index" class="rank-div" :style="{backgroundImage:'url(https://trackercdn.com/cdn/battlefieldtracker.com/assets/bfv/maps/'+item.mapKey+'.jpg)'}">
-				
-				<van-row style="font-size:medium;width: 100%;line-height:100%;">
-				   <van-col span="4">服务器</van-col>
-				   <van-col span="20">{{item.serverName}}</van-col>
-				</van-row>
+			<view v-for="(item,index) in rank_arr" :key="index" class="rank-div" :style="{backgroundImage:'url('+item.map.imageUrl+')'}">
+				<view style="width: 100%;display: flex;flex-direction: column;">
+					<view class="mask">
+						<view style="margin: 10rpx;font-size: medium;">
+							地图：{{item.mapKey|map_usTocn}}
+						</view>
+						<view style="margin: 10rpx;font-size: medium;">
+							时间：{{item.timestamp|timestamp_filter}}
+						</view>
+						<view style="margin: 10rpx;font-size: medium;">
+							服务器：{{item.serverName}}
+						</view>
+					</view>
+				</view>
 			</view>
-			<view
+			<view v-show="!error_show"
 				style="background-color: #1b2640;color:hsla(0,0%,100%,.5);width: 100%;height:5%;text-align: center;">
 				没有更多了
+			</view>
+		</view>
+		<view v-if="error_show"
+			style="color: #1b2640;width: 100%;height:100%;display: flex;justify-content: center;align-items: center;text-align: center;flex-direction: column;">
+			<view style="margin-top: 10rem;">
+				<van-image width="6rem" height="6rem" fit="fill" :src="error_cry"/>
+			</view>
+			<view style="text-align: center;">
+				服务器出现错误，请稍后再试
 			</view>
 		</view>
 	</van-tab>
@@ -424,13 +450,17 @@
 
 <script>
 	import auiLoading from '@/components/aui-loading/aui-loading.vue';
-	import url from '../../common/config.js'
+	import Notify from '@/wxcomponents/vant/dist/notify/notify';
+	import url from '../../common/config.js';
+	import map from '../../common/map_cn.js';
+	var overall;
 	export default {
 		components: {
 			auiLoading
 		},
 		data() {
 			return {
+				checked:false,
 				head_src: '',
 				username: '',
 				level: '',
@@ -460,12 +490,19 @@
 				topWeapon: '', //使用最多的武器
 				topWeapon_info_arr: [],//最多武器的信息
 				weapons_arr: [],
+				weapons_list:[],
+				weapons_total_page:'',//武器总页数
 				topVehicle: '',
 				vehicles_arr: [],
 				weapons_show: false,
 				vehicles_show: false,
 				rank_arr:[],
 				rank_show: false,
+				error_show:false,//错误图标是否显示
+				error_cry:url.errer_image.cry,//错误图标url
+				screen_height:'',//屏幕高度
+				favorite:[],
+				dist:'',
 			}
 		},
 		methods: {
@@ -630,11 +667,16 @@
 				this.topWeapon_info_arr.push({
 					Value: headshort_pre
 				});
+				this.weapons_arr.splice(0,1);
+				let length = this.weapons_arr.length;
+				//计算总页数
+				this.weapons_total_page= Math.ceil(length/10);
+				this.queryList(1,10);
 				let that = this;
 				setTimeout(function() {
 					that.$refs['aui-loading2'].hide();
 					that.weapons_show = true;
-				}, 650)
+				},800)
 			},
 			//载具数据解析
 			vehicles_data_parse(res) {
@@ -642,23 +684,76 @@
 					return b.stats[2].value - a.stats[2].value;
 				});
 				this.topVehicle = this.vehicles_arr[0];
+				this.vehicles_arr.splice(0,1);
 				let that = this;
 				setTimeout(function() {
 					that.$refs['aui-loading2'].hide();
 					that.vehicles_show = true;
-				}, 600)
+				}, 500)
 			},
 			//战绩数据解析
 			report_data_parse(res){
-				console.log(res.data);
-				this.rank_arr=res.data.data.reports;
-				console.log(this.rank_arr);
+				let data =res.data.data; 
 				let that = this;
-				setTimeout(function(){
+				if(typeof(data) == "undefined"){
+					Notify({type:'danger',message:'EA服务器开小差了，请稍后再试'});
 					that.$refs['aui-loading2'].hide();
 					that.rank_show = true;
-				},600)
-			}
+					that.error_show=true;
+					return false;
+				}else{
+					this.error_show=false;
+					this.rank_arr=data.reports;
+					console.log(this.rank_arr);
+					setTimeout(function(){
+						that.$refs['aui-loading2'].hide();
+						that.rank_show = true;
+					},600)
+				}
+				
+			},
+			queryList(pageNo,pageSize){
+				//console.log("当前页数="+pageNo);
+				//console.log("总页数="+this.weapons_total_page);
+				//判断当前页码是否大于总页码
+				if(pageNo<=this.weapons_total_page){
+					if(this.weapons_arr.length>0){
+						let temp=[];
+						for(let i=0;i<pageSize;i++){
+							if(this.weapons_arr[i]){
+								temp.push(this.weapons_arr[i]);
+							}else{
+								break;
+							}
+						}
+						this.weapons_arr.splice(0,10);
+						this.$refs['paging'].complete(temp);
+					}
+					// this.$refs['paging'].complete([1,2,3,4,5,6,7,8,9,20]);
+				}
+				
+			},
+			//点击关注时的操作
+			onChange(event) {
+			   if(this.checked){
+				   this.checked=false;
+				   let data = this.favorite;
+				   let index = data.indexOf(this.username);
+				   data.splice(index,1);
+				   uni.setStorage({
+				   	key: "favorite",
+				   	data: data
+				   })
+			   }else{
+				   this.checked=true;
+				   this.favorite.push(this.username);
+				   let data = this.favorite;
+				   uni.setStorage({
+				   	key: "favorite",
+				   	data: data
+				   })
+			   }
+			},
 			//异步更新数据
 			// onLoad(){
 			// 	if(this.weapons_arr.length==0){
@@ -686,6 +781,24 @@
 			headshort_per_filter(val) {
 				val = val * 100;
 				return val.toPrecision(3) + '%';
+			},
+			timestamp_filter(val){
+				let date = new Date(val*1000);
+				let year = date.getFullYear(),
+				                    month = date.getMonth() + 1,
+				                    sdate = date.getDate(),
+				                    hour = date.getHours(),
+				                    minute = date.getMinutes(),
+				                    second = date.getSeconds();
+				let result = year + "-"+ month +"-"+ sdate +" "+ hour +":"+ minute +":" + second;
+				return result;
+			},
+			map_usTocn(val){
+				if(overall.dist.has(val)){
+					return overall.dist.get(val);
+				}else{
+					return val;
+				}
 			}
 		},
 		onLoad(option) {
@@ -695,6 +808,39 @@
 			this.platformSlug = option.platformSlug;
 			this.getInfoByName();
 			this.$refs['vantabs'].resize();
+		},
+		onUnload() {
+			uni.setStorageSync("goBackIndex",1);
+		},
+		mounted() {
+			let that = this;
+			uni.getSystemInfo({
+				success(res) {
+					that.screen_height = res.windowHeight;
+				}
+			})
+		},
+		created() {
+			overall =this;
+			this.dist = new Map();
+			let mapData = map.dist;
+			for(let i=0;i<mapData.length;i++){
+				this.dist.set(mapData[i].label,mapData[i].value);
+			}
+			uni.getStorage({
+				key:'favorite',
+				success:(res)=>{
+					this.favorite = res.data;
+					if(this.favorite.indexOf(this.username)>-1){
+						this.checked=true;
+					}else{
+						this.checked=false;
+					}
+				},
+				fail: () => {
+					/* 没取到的操作 */
+				}
+			})
 		}
 	}
 </script>
@@ -765,6 +911,10 @@
 	.my_nav {
 		background-color: #364e80;
 	}
+	.my_tab_active{
+		height: 86%;
+		width: 100%;
+	}
 
 	.view-content {
 		width: 100%;
@@ -814,11 +964,17 @@
 	}
 	.rank-div{
 		width: 100%;
-		height: 25%;
+		height: auto;
 		display: flex;
 		flex-direction: row;
 		background-size:cover;
 		background-position: 50%;
 		border-bottom: 2rpx solid #F0E68C;border-top: 2rpx solid #F0E68C;
+	}
+	.grid-bg{
+		background-color: #1b2640;
+	}
+	.concernClass{
+		color: #FFFFFF;
 	}
 </style>
